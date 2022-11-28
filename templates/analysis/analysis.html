@@ -8,14 +8,25 @@
 	{% else %}
 		<title>Page has not title text</title>
 	{% endif %}
+	<link rel="stylesheet" href="{% static 'css/analysis/analysis.css' %}">
 {% endblock %}
 
 {% block content %}
-	<form method="POST">
-		{% csrf_token %}
-		{% for field in form %}
-			{{ field.label_tag }}{{ field }}
-		{% endfor %}
-		<input type="submit" value="Submit">
-	</form>
+	<div class="analysis-container" style="background: url({% static "img/analysis/background.jpg" %}) no-repeat; background-position: center; background-size: cover;">
+		<div class="wrapper-container container">
+			<h1 class="analysis__title">Analyze a web page</h1>
+			<p class="description">Paste the <b>URL</b> to get information about the web page of interest</p>
+			<form method="POST">
+				{% csrf_token %}
+				{% for field in form %}
+					{{ field }}
+				{% endfor %}
+				<!-- <i class="gg-search"></i> -->
+				<button class="submit-btn">
+					<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+				</button>
+
+			</form>
+		</div>
+	</div>
 {% endblock %}
