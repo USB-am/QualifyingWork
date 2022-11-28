@@ -3,6 +3,7 @@ from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
 from .forms import AnalysisForm
+from logics.analyzer import Analyzer
 
 
 class AnalysisView(FormView):
@@ -17,11 +18,6 @@ class AnalysisView(FormView):
 		context['title'] = 'AnalysisView'
 
 		return context
-
-	def post(self, request, *args, **kwargs):
-		form = AnalysisForm(request.POST)
-		print(form.data['url'])
-		return super().post(request, *args, **kwargs)
 
 	def get_success_url(self):
 		next_url = self.request.POST.get('url')
@@ -40,5 +36,6 @@ class AnalysisInfoView(TemplateView):
 		context = super().get_context_data(**kwargs)
 
 		context['title'] = 'Analysis Info page'
+		context['analyzer'] = Analyzer(context['url'])
 
 		return context
