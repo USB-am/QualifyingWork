@@ -1,0 +1,16 @@
+{% extends "../base.html" %}
+
+{% load static %}
+
+{% block title %}
+	{% if title %}
+		<title>{{ title }}</title>
+	{% else %}
+		<title>Page has not title text</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<h1>Information</h1>
+	<h2>{{ url }}</h2>
+{% endblock %}
