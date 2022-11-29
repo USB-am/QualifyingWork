@@ -31,7 +31,7 @@ form {
 	text-align: center;
 }
 input[type="text"] {
-	width: 35%;
+	width: 45%;
 	font-size: 20px;
 	padding: 7px 0;
 	border-radius: 10px 0px 0px 10px;
@@ -45,4 +45,26 @@ input[type="text"] {
 	border-radius: 0 10px 10px 0;
 	border-left: 1px solid #ddd;
 	padding: 0 10px 0 15px;
+	cursor: pointer;
+	transition: .3s;
+}
+.submit-btn:hover {
+	transition: .3s;
+	background: #ddd;
+}
+.upload-file__text {
+	margin-top: 10px;
+	text-align: center;
+	font-size: 16px;
+	color: #ddd;
+}
+.upload-file__click {
+	font-weight: 600;
+	color: #70be70;
+	border-bottom: 2px solid #70be70;
+	cursor: pointer;
+}
+.upload-file__click:hover {
+	color: lightgreen;
+	border-bottom: 2px solid lightgreen;
 }
