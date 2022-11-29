@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block title %}
-	{% if title %}
-		<title>{{ title }}</title>
-	{% else %}
-		<title>Page has not title text</title>
-	{% endif %}
+	<title>{{ title }}</title>
 {% endblock %}
 
 {% block content %}
-	<h1>Information</h1>
-	<h2>{{ url }}</h2>
-	<h2>{{ analyzer.title }}{{ analyzer.metas }}</h2>
+	<div class="global-info">
+		<div class="global-info__wrapper container">
+			<div class="domain">
+				<h2>{{ url }}</h2>
+			</div>
+		</div>
+	</div>
 {% endblock %}
