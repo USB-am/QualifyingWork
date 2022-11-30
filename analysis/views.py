@@ -20,10 +20,13 @@ class AnalysisView(FormView):
 		return context
 
 	def get_success_url(self):
-		url = self.request.POST.get('url')
+		url_input = self.request.POST.get('url')
+		url = get_domain(url_input)
 
 		if url:
 			return reverse_lazy('analysis_info', kwargs={'url': url})
+		if url_input:
+			return reverse_lazy('analysis_info', kwargs={'url': url_input})
 		return reverse_lazy('index')
 
 

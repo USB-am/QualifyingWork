@@ -10,8 +10,47 @@
 	<div class="global-info">
 		<div class="global-info__wrapper container">
 			<div class="domain">
+				<div class="site-logo">
+					<img src="{{ analyzer.favicon_url }}" alt="The icon of the site being analyzed">
+				</div>
 				<h2>{{ analyzer.domain }}</h2>
 			</div>
 		</div>
+		<!--
+		{% for meta in analyzer.metas %}
+			<div class="container">
+				<h4>{{ meta.type }}</h4>
+				<h5>{{ meta.content }}</h5>
+			</div>
+			<br>
+		{% endfor %}
+		-->
+
+		<!--
+		{% for img in analyzer.imgs %}
+			<div class="container">
+				<h4>{{ img.alt }}</h4>
+				<h5>{{ img.title }}</h5>
+			</div>
+			<br>
+		{% endfor %}
+		-->
+
+		<!--
+		{% for text in analyzer.text %}
+			<div class="container">
+				<h4>{{ text.name }}</h4>
+				<h5>{{ text.content }}</h5>
+			</div>
+		{% endfor %}
+		-->
+
+		{% for link in analyzer.links %}
+			<div class="container">
+				<h4>{{ link.content }}</h4>
+				<h5>{{ link.href }}</h5>
+			</div>
+			<br>
+		{% endfor %}
 	</div>
 {% endblock %}
