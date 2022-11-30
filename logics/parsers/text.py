@@ -48,7 +48,7 @@ def pars_text(url: str):
 @dataclass
 class LinkTag():
 	''' Тег-ссылка '''
-	name: str
+	name = 'a'
 	content: str
 	href: str
 
@@ -64,7 +64,7 @@ def select_a_tags(soup: bs) -> list:
 	for tag in a_tags:
 		text = re.sub(r'\s+', ' ', tag.text).strip()
 		href = tag.attrs.get('href')
-		output.append(LinkTag(name='a', content=text, href=href))
+		output.append(LinkTag(content=text, href=href))
 
 	return output
 

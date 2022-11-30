@@ -8,7 +8,7 @@ from bs4.element import ResultSet
 @dataclass
 class MetaTag():
 	''' <meta> '''
-	name='meta'
+	name = 'meta'
 	type: str
 	content: str
 
@@ -16,7 +16,7 @@ class MetaTag():
 @dataclass
 class TitleTag():
 	''' <title> '''
-	name: str
+	name = 'title'
 	text: str
 
 
@@ -58,6 +58,6 @@ def pars_head(url: str) -> list:
 	soup = bs(get_html(url), 'html.parser')
 
 	return [
-		TitleTag(name='title', text=soup.find('title').text),
+		TitleTag(text=soup.find('title').text),
 		*select_seo_meta_tags(soup),
 	]
