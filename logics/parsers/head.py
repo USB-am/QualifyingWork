@@ -20,6 +20,14 @@ class TitleTag():
 	text: str
 
 
+@dataclass
+class LinkTag():
+	''' <link> '''
+	name = 'link'
+	rel: str
+	href: str
+
+
 def get_html(url: str) -> str:
 	return requests.get(url).text
 
@@ -54,10 +62,17 @@ def select_seo_meta_tags(soup: bs) -> list:
 	return seo_meta_tags
 
 
+def select_favicon_tag(soup: bs) -> LinkTag:
+	tag = soup.find('link', attrs={'rel': 'icon'})
+
+	return LinkTag(rel='icon', href=tag.attrs.get('href'))
+
+
 def pars_head(url: str) -> list:
 	soup = bs(get_html(url), 'html.parser')
 
 	return [
 		TitleTag(text=soup.find('title').text),
+		select_favicon_tag(soup),
 		*select_seo_meta_tags(soup),
 	]
