@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-import requests
 from bs4 import BeautifulSoup as bs
 
 
@@ -12,11 +11,7 @@ class ImgTag():
 	title: str
 
 
-def get_html(url: str) -> str:
-	return requests.get(url).text
-
-
-def get_images(soup: bs) -> list:
+def pars_imgs(soup: bs) -> list:
 	img_tags = soup.find_all('img')
 
 	imgs = []
@@ -26,9 +21,3 @@ def get_images(soup: bs) -> list:
 		imgs.append(ImgTag(alt=alt, title=title))
 
 	return imgs
-
-
-def pars_imgs(url: str) -> list:
-	soup = bs(get_html(url), 'html.parser')
-
-	return get_images(soup)

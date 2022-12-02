@@ -48,6 +48,7 @@ class ComparisonInfoView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 
-		context['title'] = 'Comparison of web pages information'
+		context['title'] = f'{context["url_1"]}/{context["url_2"]} - Comparison of web pages information'
+		context['analyzer'] = Analyzer(context['url_1'])
 
 		return context
