@@ -1,0 +1,25 @@
+{% extends "../base.html" %}
+
+{% load static %}
+
+{% block title %}
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="{% static 'css/comparison/information.css' %}">
+{% endblock %}
+
+{% block content %}
+	<div class="comparison-container container">
+		<div class="comparison-container__wrapper">
+			<div class="comparison-container__header">
+				<div class="comparison-page__title">
+					<img src="{{ analyzer.favicon.href }}">
+					<h1>{{ analyzer.domain }} / {{ analyzer.domain }}</h1>
+					<img src="{{ analyzer.favicon.href }}">
+				</div>
+				<div class="comparison-page__block">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

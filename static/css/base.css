@@ -1,3 +1,8 @@
+:root {
+	--accent-color: #70be70;
+	--accent-color-hover: lightgreen;
+}
+
 * {
 	font-family: 'Montserrat', sans-serif;
 }

@@ -28,7 +28,7 @@ def select_tags(soup: bs, tag_name: str) -> list:
 	return output
 
 
-def select_text_tags(soup: bs) -> list:
+def pars_text(soup: bs) -> list:
 	output = []
 
 	for tag_name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']:
@@ -37,18 +37,12 @@ def select_text_tags(soup: bs) -> list:
 	return output
 
 
-def pars_text(url: str):
-	soup = bs(get_html(url), 'html.parser')
-
-	return select_text_tags(soup)
-
-
 
 
 @dataclass
 class LinkTag():
 	''' Тег-ссылка '''
-	name: str
+	name = 'a'
 	content: str
 	href: str
 
@@ -57,19 +51,13 @@ class LinkTag():
 		return self.href.split('/')
 
 
-def select_a_tags(soup: bs) -> list:
+def pars_links(soup: bs) -> list:
 	a_tags = soup.find_all('a')
 	output = []
 
 	for tag in a_tags:
 		text = re.sub(r'\s+', ' ', tag.text).strip()
 		href = tag.attrs.get('href')
-		output.append(LinkTag(name='a', content=text, href=href))
+		output.append(LinkTag(content=text, href=href))
 
 	return output
-
-
-def pars_links(url: str) -> list:
-	soup = bs(get_html(url), 'html.parser')
-
-	return select_a_tags(soup)

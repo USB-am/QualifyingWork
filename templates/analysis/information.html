@@ -3,15 +3,28 @@
 {% load static %}
 
 {% block title %}
-	<title>{{ title }}</title>
+	<title>{{ analyzer.domain }} - {{ title }}</title>
 {% endblock %}
 
 {% block content %}
 	<div class="global-info">
 		<div class="global-info__wrapper container">
 			<div class="domain">
-				<h2>{{ analyzer.domain }}</h2>
+				<div class="site-logo">
+					<img src="{{ analyzer.favicon.href }}" alt="The icon of the site being analyzed">
+				</div>
+				<h1>{{ analyzer.domain }}</h1>
 			</div>
+		</div>
+	</div>
+	<div class="google-analytics container">
+		<div class="google-analytics__wrapper">
+			<h4>
+				External links:
+				<span class="google-analytics__value">
+					123
+				</span>
+			</h4>
 		</div>
 	</div>
 {% endblock %}

@@ -1,5 +1,7 @@
 from urllib.parse import urlparse
 
+from logics.parsers import WebPage
+
 
 def get_domain(url: str) -> str:
 	return urlparse(url).netloc
@@ -7,12 +9,14 @@ def get_domain(url: str) -> str:
 
 class Analyzer:
 	''' Предоставляет методы для анализа сайта '''
-	title = 'title'
-	metas = ['meta1', 'meta2']
 
 	def __init__(self, url: str):
-		self.url = url
-		self.domain = urlparse(self.url).netloc
+		self.url = f'https://{url}'
+		self.domain = get_domain(self.url)
 
-	def test_print(self):
-		return 'test_print is worked!'
+		self.web_page = WebPage(self.url)
+		web_page_data = self.web_page.get_data()
+		self.__dict__.update(web_page_data)
+
+	def __str__(self):
+		return f'{self.domain} - {self.title.text}'
