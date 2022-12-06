@@ -1,10 +1,16 @@
 from urllib.parse import urlparse
 
+from fuzzywuzzy import fuzz
+
 from logics.parsers import WebPage
 
 
 def get_domain(url: str) -> str:
 	return urlparse(url).netloc
+
+
+def matching_text(comparable_text: str, text: str) -> float:
+	return fuzz.partial_ratio(comparable_text, text)
 
 
 class Analyzer:
@@ -20,3 +26,9 @@ class Analyzer:
 
 	def __str__(self):
 		return f'{self.domain} - {self.title.text}'
+
+	def get_tags_matching(self) -> float:
+		# return matching_text()
+		# print(self.title)
+		# print(sorted(self.text)[0])
+		return '123'
