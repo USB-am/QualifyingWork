@@ -7,25 +7,29 @@
 {% endblock %}
 
 {% block content %}
-	<div class="global-info">
-		<div class="global-info__wrapper container">
-			<div class="domain">
-				<div class="site-logo">
-					<img src="{{ analyzer.favicon.href }}" alt="The icon of the site being analyzed">
+	<div class="information-container" style="min-height: 90vh;">
+		<div class="global-info">
+			<div class="global-info__wrapper container">
+				<div class="domain">
+					<div class="site-logo">
+						<img src="{{ analyzer.favicon.href }}" alt="The icon of the site being analyzed">
+					</div>
+					<h1>{{ analyzer.domain }}</h1>
 				</div>
-				<h1>{{ analyzer.domain }}</h1>
 			</div>
 		</div>
-	</div>
-	<div class="google-analytics container">
-		<div class="google-analytics__wrapper">
-			<h4>
-				External links:
-				<span class="google-analytics__value">
-					123
-				</span>
-			</h4>
+		<div class="google-analytics container">
+			<div class="google-analytics__wrapper">
+				<h4>
+					External links:
+					<span class="google-analytics__value">
+						123
+					</span>
+				</h4>
+			</div>
+			<h1>{{ analyzer.get_tags_matching }}</h1>
+			<h1>{{ analyzer.title }}</h1>
+			<h1>{{ analyzer.favicon }}</h1>
 		</div>
-		<h1>{{ analyzer.get_tags_matching }}</h1>
 	</div>
 {% endblock %}

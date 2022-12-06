@@ -1,3 +1,5 @@
+import requests
+
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
@@ -38,6 +40,9 @@ class AnalysisInfoView(TemplateView):
 		context = super().get_context_data(**kwargs)
 
 		context['title'] = 'Analysis Info page'
-		context['analyzer'] = Analyzer(context['url'])
+		try:
+			context['analyzer'] = Analyzer(context['url'])
+		except requests.exceptions.ConnectionError:
+			context['error'] = 'Url is invalid!'
 
 		return context

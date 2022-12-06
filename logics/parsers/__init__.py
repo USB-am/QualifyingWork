@@ -24,10 +24,17 @@ class WebPage():
 		data = {
 			'title': pars_title(soup),
 			'meta_tags': pars_meta_tags(soup),
-			'favicon': pars_favicon(soup),
+			'favicon': self._get_favicon(soup),
 			'imgs': pars_imgs(soup),
 			'text': pars_text(soup),
 			'links': pars_links(soup),
 		}
 
 		return data
+
+	def _get_favicon(self, soup: bs) -> str:
+		favicon = pars_favicon(soup)
+		if favicon.href[0] == '/':
+			favicon.href = f'{self.url}{favicon.href}'
+
+		return favicon
