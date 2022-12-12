@@ -64,6 +64,16 @@ def pars_links(soup: bs) -> list:
 	return output
 
 
+def zero_division_error(method):
+	def wrapper(*args, **kwargs):
+		try:
+			return method(*args, **kwargs)
+		except ZeroDivisionError:
+			return 0
+
+	return wrapper
+
+
 @dataclass
 class Text():
 	texts: Union[list, tuple]
@@ -79,12 +89,32 @@ class Text():
 	def length(self) -> int:
 		return len(self.text)
 
-	def first_text_percent(self, limit: int) -> str:
-		limit %= 100	# Max percent = 100%
-		index_from_percent = self.length // limit
-		sliced_text = self.text[:index_from_percent]
+	def _slice_text(self, start: int=0, stop: int=None) -> str:
+		if stop is None:
+			stop = self.length
 
-		return sliced_text
+		start_ind = start // self.length * 100
+		stop_ind = stop // self.length * 100
+
+		return slice(start_ind, stop_ind)
+
+	@zero_division_error
+	def first_text_percent(self, stop: int) -> str:
+		slice_ = self._slice_text(stop=stop)
+
+		return self.text[slice_]
+
+	@zero_division_error
+	def center_text_parcent(self, start: int, stop: int) -> str:
+		slice_ = self._slice_text(start=start, stop=stop)
+
+		return self.text[slice_]
+
+	@zero_division_error
+	def end_text_parcent(self, start: int) -> str:
+		slice_ = self._slice_text(start=start, stop=self.length)
+
+		return self.text[slice_]
 
 
 def pars_all_text(soup: bs) -> str:
@@ -97,7 +127,7 @@ def pars_all_text(soup: bs) -> str:
 		)
 	)
 
-	return p_tags
+	return Text(tuple(p_tags))
 
 
 def main():

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup as bs
 # from .google_parser import GoogleParser
 from .head import pars_title, pars_meta_tags, pars_favicon
 from .img import pars_imgs
-from .text import pars_text, pars_links
+from .text import pars_text, pars_links, pars_all_text
 
 
 def get_html(url: str) -> str:
@@ -27,6 +27,7 @@ class WebPage():
 			'favicon': self._get_favicon(soup),
 			'imgs': pars_imgs(soup),
 			'text': pars_text(soup),
+			'all_text': pars_all_text(soup),
 			'links': pars_links(soup),
 		}
 

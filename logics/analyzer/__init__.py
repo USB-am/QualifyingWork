@@ -32,3 +32,9 @@ class Analyzer:
 		# print(self.title)
 		# print(sorted(self.text)[0])
 		return '123'
+
+	def first_20_text(self) -> str:
+		txt = self.all_text.first_text_percent(20)
+		print(f'Text="{txt}"')
+
+		return txt
