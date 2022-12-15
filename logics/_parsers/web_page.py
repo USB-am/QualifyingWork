@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 import requests
 from bs4 import BeautifulSoup as bs
 from bs4.element import ResultSet
@@ -50,6 +52,21 @@ class WebPage():
 
 # ================ #
 # === Analyzer === #
+@dataclass
+class LinkTag:
+	''' <a> '''
+
+	tag = 'a'
+	href: str
+	text: str
+
+	def __str__(self):
+		return '<a href="{href}">{text}</a>'.format(
+			href=self.href,
+			text=self.text
+		)
+
+
 class HeadAnalyzer():
 	''' Анализатор <head> '''
 
@@ -84,14 +101,7 @@ class HeadAnalyzer():
 		for paragraph in paragraphs:
 			density.append(len(paragraph.text))
 
-		out = (sum(density) / len(density))
-		print('({s} / {l}) = {o}'.format(
-			s=sum(density),
-			l=len(density),
-			o=out
-		))
-
-		return out
+		return (sum(density) / len(density)) / 500
 
 	def get_all_text(self) -> tuple:
 		filtered_text = filter(
@@ -100,6 +110,26 @@ class HeadAnalyzer():
 		)
 
 		return tuple(filtered_text)
+
+	def get_links(self) -> tuple:
+		link_tags = self.page.get_elements_by_tag('a')
+		links = []
+
+		for link_tag in link_tags:
+			href = None
+
+			if link_tag.attrs.get('href') is not None:
+				if link_tag.attrs.get('href')[0] == '/':
+					href = self.page.url + link_tag.attrs.get('href')
+				else:
+					href = link_tag.attrs.get('href')
+
+			links.append(LinkTag(
+				href=href,
+				text=link_tag.text
+			))
+
+		return links
 # === Analyzer === #
 # ================ #
 
@@ -113,3 +143,5 @@ if __name__ == '__main__':
 	# alts = analyzer.images_alts()
 	# density = analyzer.text_density()
 	# all_text = analyzer.get_all_text()
+	links = analyzer.get_links()
+	print(links)
