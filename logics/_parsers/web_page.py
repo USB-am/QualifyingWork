@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 from bs4.element import ResultSet
+from bs4.element import Comment
 from fuzzywuzzy import fuzz
 
 # ============== #
@@ -26,6 +27,24 @@ class WebPage():
 		soup = bs(html, 'html.parser')
 
 		return soup.find_all(tag, attrs=attrs)
+
+	def get_all_text(self) -> tuple:
+		html = get_html(self.url).text
+		soup = bs(html, 'html.parser')
+
+		def is_visible_tag(tag) -> bool:
+			unvisible_tags = ('style', 'script', 'head', 'title',
+				'meta', '[document]')
+			if tag.parent.name in unvisible_tags:
+				return False
+			if isinstance(tag, Comment):
+				return False
+			return True
+
+		texts = soup.find_all(text=True)
+		visible_texts = filter(is_visible_tag, texts)
+
+		return tuple(visible_texts)
 # === Parser === #
 # ============== #
 
@@ -59,13 +78,28 @@ class HeadAnalyzer():
 		return imgs_has_alt / imgs_count
 
 	def text_density(self) -> float:
-		paragraphs = self.page.get_elements_by_tag('p')
+		paragraphs = self.get_all_text()
 		density = []
 
 		for paragraph in paragraphs:
 			density.append(len(paragraph.text))
 
-		return (sum(density) / len(density)) / 500
+		out = (sum(density) / len(density))
+		print('({s} / {l}) = {o}'.format(
+			s=sum(density),
+			l=len(density),
+			o=out
+		))
+
+		return out
+
+	def get_all_text(self) -> tuple:
+		filtered_text = filter(
+			lambda tag: not tag.text.strip() in ('', ' ', '\n'),
+			self.page.get_all_text()
+		)
+
+		return tuple(filtered_text)
 # === Analyzer === #
 # ================ #
 
@@ -78,3 +112,4 @@ if __name__ == '__main__':
 	analyzer = HeadAnalyzer(web_page)
 	# alts = analyzer.images_alts()
 	# density = analyzer.text_density()
+	# all_text = analyzer.get_all_text()
