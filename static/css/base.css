@@ -74,6 +74,10 @@ nav {
 	margin-left: 10px;
 }
 
+#content-container {
+	min-height: 65vh;
+}
+
 footer {
 	height: 25vh;
 	background-color: rgb(0, 0, 0);

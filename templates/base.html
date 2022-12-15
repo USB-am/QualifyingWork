@@ -27,15 +27,17 @@
 				<!-- <a class="nav__item" href="{% url 'index' %}">Homepage</a> -->
 				<a class="nav__item" href="{% url 'analysis' %}">Analyze</a>
 				<a class="nav__item" href="{% url 'comparison' %}">Compare</a>
-				<a class="nav__item" href=#>Contacts</a>
+				<a class="nav__item" href="{% url 'contacts' %}">Contacts</a>
 			</nav>
 		</div>
 		<div class="auth-container">
 			<a class="auth__item" href=#>Log in</a> | <a class="auth__item" href=#>Register</a>
 		</div>
 	</header>
-	{% block content %}
-	{% endblock %}
+	<div id="content-container">
+		{% block content %}
+		{% endblock %}
+	</div>
 	<footer>
 		<div class="footer-container">
 			<div class="footer-container__left">

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'index.apps.IndexConfig',
     'analysis.apps.AnalysisConfig',
     'comparison.apps.ComparisonConfig',
+    'contacts.apps.ContactsConfig',
 ]
 
 MIDDLEWARE = [

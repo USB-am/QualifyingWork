@@ -1,0 +1,35 @@
+.contacts-container {
+	display: flex;
+	min-height: 150vh;
+}
+.person-information-container {
+	width: 65%;
+	padding-left: 100px;
+	padding-right: 25px;
+}
+.global_title {
+	font-size: 48px;
+	margin-top: 50px;
+	border-bottom: 2px solid #333;
+}
+.paragraph-title {
+	font-size: 36px;
+	margin-top: 50px;
+}
+.social-networks__list {
+	display: flex;
+}
+.social-networks__list a {
+	color: #000;
+	font-size: 36px;
+	margin-right: 20px;
+}
+.social-networks__list a:last-child {
+	margin-right: 0;
+}
+
+.map {
+	width: 35%;
+	min-width: 350px;
+	z-index: 0;
+}
