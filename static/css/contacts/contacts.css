@@ -14,22 +14,48 @@
 }
 .paragraph-title {
 	font-size: 36px;
-	margin-top: 50px;
+	margin-top: 35px;
 }
 .social-networks__list {
 	display: flex;
+	margin-top: 10px;
 }
 .social-networks__list a {
-	color: #000;
+	color: rgba(0, 0, 0, .6);
 	font-size: 36px;
 	margin-right: 20px;
+	transition: .3s;
 }
 .social-networks__list a:last-child {
 	margin-right: 0;
+}
+.social-networks__list a:hover {
+	transition: .3s;
+	color: #000;
+}
+.executor-info {
+	margin-top: 10px;
+}
+.executor-info__text {
+	font-size: 24px;
+}
+.executor-info__text a {
+	color: var(--accent-color);
+	transition: .3s;
+}
+.executor-info__text a:hover {
+	color: var(-accent-color-hover);
+	text-decoration: underline;
+	transition: .3s;
 }
 
 .map {
 	width: 35%;
 	min-width: 350px;
 	z-index: 0;
+	position: sticky;
+	top: 0;
+	right: 0;
+	max-height: 100vh;
+	min-height: 90vh;
 }
