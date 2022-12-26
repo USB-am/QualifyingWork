@@ -29,7 +29,7 @@ class Parser():
 
 
 @dataclass
-class Analyzer():
+class Analyzer(ABC):
 	def __call__(self, parser: Parser):
 		return {
 			'title': self._percent_title_to_h1(parser),
@@ -42,6 +42,10 @@ class Analyzer():
 		return fuzz.partial_ratio(title_tag.text, h1_tag.text)
 
 
+class BlogAnalyzer(Analyzer):
+	''' Анализатор сайта типа "Блог" '''
+
+
 @dataclass
 class Model(ABC):
 	''' Абстрактный класс модели '''
@@ -50,6 +54,9 @@ class Model(ABC):
 
 class BlogModel(Model):
 	''' Математическая модели для оценки сайтов типа "блок" '''
+
+	def __call__(self, analyzer: BlogAnalyzer) -> dict:
+		return analyzer.analyze()
 
 
 if __name__ == '__main__':
