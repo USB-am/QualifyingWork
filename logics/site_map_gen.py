@@ -102,9 +102,16 @@ class Node:
 		self.app_name = app_name
 		self.childrens = childrens
 
-	def __in__(self, other: str) -> bool:
-		return True
-		# TODO: сделать поиск по дочерним элементам
+	def has_child(self, app_name: str) -> bool:
+		for child in self.childrens:
+			if app_name == child.app_name:
+				return True
+
+		for child in self.childrens:
+			if child.has_child(app_name):
+				return True
+
+		return False
 
 
 class Tree(dict):
@@ -116,14 +123,8 @@ class Tree(dict):
 		self[DOMAIN] = parent
 
 	def add(self, url: URL) -> None:
-		current_node = self[DOMAIN]
-
 		for app in url.apps:
-			for node in current_node.childrens:
-				if app == node.app_name:
-					print(f'{app} is exists')
-				else:
-					print(f'{app} is not found')
+			print(app)
 
 
 if __name__ == '__main__':
