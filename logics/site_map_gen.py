@@ -88,8 +88,12 @@ class SiteMap(dict):
 
 class URL:
 	def __init__(self, url: str):
-		self.url = url.split(DOMAIN)[1]
-		self.apps = self.url.split('/')[1:-1]
+		try:
+			self.url = url.split(DOMAIN)[1]
+			self.apps = self.url.split('/')[1:-1]
+		except IndexError:
+			self.url = ''
+			self.apps = []
 
 	def __str__(self):
 		return self.url
@@ -130,7 +134,8 @@ class Tree(dict):
 if __name__ == '__main__':
 	site_map = SiteMap(f'https://{DOMAIN}')
 
-	# for link in site_map.links:
-	# 	print(link)
 	tree = Tree(Node(app_name=DOMAIN))
-	tree.add(URL('https://habr.com/ru/post/683956/'))
+
+	for link in site_map.links:
+		# print(link.href)
+		tree.add(URL(link.href))
