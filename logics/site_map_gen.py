@@ -18,124 +18,45 @@ headers = {
 }
 
 
-class Link:
-	name = 'a'
+def get_html(url: str) -> str:
+	html = requests.get(url).text
 
-	def __init__(self, tag: element.Tag):
-		self.tag = tag
-		self.href = self.__get_href()
-		self.text = self.tag.text.strip()
-
-	def __get_href(self) -> str:
-		href = self.tag.attrs.get('href')
-
-		if href is None:
-			return ''
-
-		if href[0] == '/':
-			href = f'https://{DOMAIN}{href}'
-
-		href = href.split('?')[0].split('#')[0]
-
-		return href
-
-	def __str__(self):
-		return f'[{self.href}] {self.text}'
+	return html
 
 
-class Parser:
-	''' Get info from web-page '''
-
-	@staticmethod
-	def get_html(url: str) -> str:
-		return requests.get(url, headers=headers).text
-
-	def getElementByTag(self, soup: bs, tag: str, **attrs) -> element.ResultSet:
-		return soup.find_all(tag, attrs=attrs)
-
-	def get_links(self, url: str) -> list:
-		links = []
-		html = Parser.get_html(url)
-		soup = bs(html, 'html.parser')
-
-		link_tags = self.getElementByTag(soup, 'a')
-		for link_tag in link_tags:
-			links.append(Link(link_tag))
-
-		return links
+@dataclass
+class Page():
+	''' Базовое представление страницы сайта '''
+	url: str
 
 
-class SiteMap(dict):
-	''' Inited site map '''
+class SiteTree(dict):
+	''' Представление карты сайта '''
 
-	def __init__(self, domain: str):
-		super().__init__()
+	def __init__(self, domain: str, root: Page):
+		super().__init__(domain=root)
 
-		self.domain = domain
-		self[domain] = []
-
-		self.pars = Parser()
-		self.__fill()
-
-	def __fill(self) -> None:
-		self.links = self.pars.get_links(self.domain)
-
-		return
-
-	def has_app(self, app_name: str) -> bool:
-		return True
+	def add_node(self, child: Page) -> None:
+		print(f'add_node has child={child}')
 
 
-class URL:
+class Site:
+	''' Базовое представление сайта '''
+
 	def __init__(self, url: str):
-		try:
-			self.url = url.split(DOMAIN)[1]
-			self.apps = self.url.split('/')[1:-1]
-		except IndexError:
-			self.url = ''
-			self.apps = []
+		self.url = url
+		self.domain = urlparse(url).netloc
+		self.page = Page(self.domain)
+
+		self.childs = SiteTree(self.domain, self.page)
 
 	def __str__(self):
-		return self.url
+		return self.domain
 
 
-class Node:
-	''' Элемент дерева '''
-
-	def __init__(self, app_name: str, childrens: list=[]):
-		self.app_name = app_name
-		self.childrens = childrens
-
-	def has_child(self, app_name: str) -> bool:
-		for child in self.childrens:
-			if app_name == child.app_name:
-				return True
-
-		for child in self.childrens:
-			if child.has_child(app_name):
-				return True
-
-		return False
-
-
-class Tree(dict):
-	''' Предсталение дерева приложений сайта '''
-
-	def __init__(self, parent: Node):
-		super().__init__()
-
-		self[DOMAIN] = parent
-
-	def add(self, url: URL) -> None:
-		for app in url.apps:
-			print(app)
+def main():
+	site = Site(_URL)
 
 
 if __name__ == '__main__':
-	site_map = SiteMap(f'https://{DOMAIN}')
-
-	tree = Tree(Node(app_name=DOMAIN))
-
-	for link in site_map.links:
-		# print(link.href)
-		tree.add(URL(link.href))
+	main()
