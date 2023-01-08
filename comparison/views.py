@@ -2,7 +2,14 @@ from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
 from .forms import ComparisonForm
-from logics.analyzer import Analyzer, get_domain
+# from logics.analyzer import Analyzer, get_domain
+
+
+def get_domain(url: str) -> str:
+	parsed_url = urlparse(url)
+	domain = f'{parsed_url.scheme}:__{parsed_url.netloc}'
+
+	return domain
 
 
 class ComparisonView(FormView):
@@ -49,6 +56,6 @@ class ComparisonInfoView(TemplateView):
 		context = super().get_context_data(**kwargs)
 
 		context['title'] = f'{context["url_1"]}/{context["url_2"]} - Comparison of web pages information'
-		context['analyzer'] = Analyzer(context['url_1'])
+		# context['analyzer'] = Analyzer(context['url_1'])
 
 		return context

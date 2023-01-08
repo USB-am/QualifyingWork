@@ -3,18 +3,18 @@
 {% load static %}
 
 {% block title %}
-	<title>{{ analyzer.domain }} - {{ title }}</title>
+	<title>{{ site.netloc }} - {{ title }}</title>
 {% endblock %}
 
 {% block content %}
 	<div class="information-container" style="min-height: 90vh;">
+		<h1>{{ site.netloc }} - {{ title }}</h1>
 		<div class="global-info">
 			<div class="global-info__wrapper container">
 				<div class="domain">
 					<div class="site-logo">
-						<img src="{{ analyzer.favicon.href }}" alt="The icon of the site being analyzed">
+						<img src="{{ site.favicon.href }}" alt="The icon of the site being analyzed">
 					</div>
-					<h1>{{ analyzer.domain }}</h1>
 				</div>
 			</div>
 		</div>
@@ -27,10 +27,6 @@
 					</span>
 				</h4>
 			</div>
-			<h1>{{ analyzer.get_tags_matching }}</h1>
-			<h1>{{ analyzer.title }}</h1>
-			<h1>{{ analyzer.favicon }}</h1>
-			<h3>{{ analyzer.first_20_text }}</h3>
 		</div>
 	</div>
 {% endblock %}
