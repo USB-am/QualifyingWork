@@ -81,10 +81,16 @@ def normalize_links(domain: str, links: element.ResultSet) -> list:
 	return output
 
 
+class LinksAnalyzer:
+	def __init__(self, domain: str, links: element.ResultSet):
+		self.domain = domain
+		self.links = normalize_links(domain, links)
+
+	def __str__(self):
+		return str(self.links)
+
+
 def links_analyzer(domain: str, links: list) -> None:
 	links = normalize_links(domain, links)
 	for link in links:
-		# text = link.text.strip()
-		# href = link.attrs.get('href')
-		# print(f'{text} [{href}]')
-		print(f'"{link}"')
+		print(f'{link}')
