@@ -13,7 +13,6 @@ from logics import Site
 
 def get_domain(url: str) -> str:
 	parsed_url = urlparse(url)
-	# domain = f'{parsed_url.scheme}:__{parsed_url.netloc}'
 	scheme = parsed_url.scheme
 	domain = parsed_url.netloc
 

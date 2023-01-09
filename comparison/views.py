@@ -1,15 +1,23 @@
+from urllib.parse import urlparse
+
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
 from .forms import ComparisonForm
 # from logics.analyzer import Analyzer, get_domain
+from logics import Site
 
 
 def get_domain(url: str) -> str:
 	parsed_url = urlparse(url)
-	domain = f'{parsed_url.scheme}:__{parsed_url.netloc}'
+	scheme = parsed_url.scheme
+	domain = parsed_url.netloc
 
-	return domain
+	return (scheme, domain)
+
+
+def input_to_domain(scheme: str, domain: str) -> str:
+	return f'{scheme}://{domain}'
 
 
 class ComparisonView(FormView):
@@ -27,24 +35,18 @@ class ComparisonView(FormView):
 		return context
 
 	def get_success_url(self):
-		url_1_input = self.request.POST.get('url_1')
-		url_1 = get_domain(url_1_input)
+		url_1 = self.request.POST.get('url_1')
+		url_2 = self.request.POST.get('url_2')
+		scheme_1, domain_1 = get_domain(url_1)
+		scheme_2, domain_2 = get_domain(url_2)
 
-		url_2_input = self.request.POST.get('url_2')
-		url_2 = get_domain(url_2_input)
-
-		if all((url_1, url_2)):
-			return reverse_lazy('comparison_info', kwargs={
-				'url_1': url_1,
-				'url_2': url_2,
-			})
-		if all((url_1_input, url_2_input)):
-			return reverse_lazy('comparison_info', kwargs={
-				'url_1': url_1_input,
-				'url_2': url_2_input,
-			})
-
-		return reverse_lazy('comparison')
+		return reverse_lazy(
+			viewname='comparison_info',
+			kwargs={
+				'scheme_1': scheme_1, 'domain_1': domain_1,
+				'scheme_2': scheme_2, 'domain_2': domain_2,
+			}
+		)
 
 
 class ComparisonInfoView(TemplateView):
@@ -55,7 +57,13 @@ class ComparisonInfoView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 
-		context['title'] = f'{context["url_1"]}/{context["url_2"]} - Comparison of web pages information'
-		# context['analyzer'] = Analyzer(context['url_1'])
+		context['title'] = f'{context["domain_1"]}/{context["domain_2"]}' +\
+			' - Comparison of web pages information'
+		context['site_1'] = Site(
+			input_to_domain(context['scheme_1'], context['domain_1'])
+		)
+		context['site_2'] = Site(
+			input_to_domain(context['scheme_2'], context['domain_2'])
+		)
 
 		return context

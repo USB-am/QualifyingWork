@@ -17,6 +17,9 @@ class Favicon:
 		soup = bs(get_html(self.domain), 'html.parser')
 		icon_tag = soup.find('link', attrs={'rel': 'icon'})
 
+		if icon_tag is None:
+			return ''
+
 		href = icon_tag.attrs.get('href')
 		if href is not None:
 			if href[0] == '/':
