@@ -54,8 +54,8 @@
 	min-width: 350px;
 	z-index: 0;
 	position: sticky;
-	top: 0;
+	top: 10vh;
 	right: 0;
-	max-height: 100vh;
-	min-height: 90vh;
+	max-height: 90vh;
+	z-index: 99999;
 }
