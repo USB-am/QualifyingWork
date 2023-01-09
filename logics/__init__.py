@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-from logics.parser import Favicon
+from logics.parser import Favicon, Meta
 
 
 class Page:
@@ -23,6 +23,7 @@ class Site:
 			self.domain: Page(self.domain),
 		}
 		self.favicon = Favicon(self.domain)
+		self.meta = Meta(self.domain)
 
 	def __str__(self):
 		return f'<Site domain={self.domain}>'
