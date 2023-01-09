@@ -8,18 +8,48 @@
 {% endblock %}
 
 {% block content %}
-	<div class="comparison-container container">
-		<div class="comparison-container__wrapper">
-			<div class="comparison-container__header">
-				<div class="comparison-page__title">
-					<img src="{{ site_1.favicon.href }}" alt="{{ site_1.netloc }} favicon is not found!">
-					<h1>{{ site_1.netloc }} / {{ site_2.netloc }}</h1>
-					<img src="{{ site_2.favicon.href }}" alt="{{ site_2.netloc }} favicon is not found!">
+	<div class="comparison-container">
+		<div class="sites-container container">
+			<div class="compare-title">
+				<img class="site-logo" src="{{ site_1.favicon.href }}" alt="{{ site_1.netloc }} favicon is not found!">
+				<h1 class="compare-title__text">
+					{{ site_1.netloc.upper }} / {{ site_2.netloc.upper }}
+				</h1>
+				<img class="site-logo" src="{{ site_2.favicon.href }}" alt="{{ site_2.netloc }} favicon is not found!">
+			</div>
+			<div class="sites-container__block">
+				<div class="site-info site-info__left">
+					<div class="site-info__container">
+						<h2 class="site-domain-title">{{ site_1.netloc }}</h2>
+						<p class="site-info__description" onclick="open_diagram('{{ site_1.netloc }}')">
+							Description:<br>
+							<span>{{ site_1.meta.description }}</span>
+						</p>
+					</div>
 				</div>
-				<div class="comparison-page__block">
-					
+				<div class="site-info site-info__right">
+					<div class="site-info__container">
+						<h2 class="site-domain-title">{{ site_2.netloc }}</h2>
+						<p class="site-info__description" onclick="open_diagram('{{ site_2.netloc }}')">
+							Description:<br>
+							<span>{{ site_2.meta.description }}</span>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="top-block">
+		<div class="top-block__container">
+			<h1>Top block</h1>
+		</div>
+	</div>
+
+	<script>
+		function open_diagram(site_netloc) {
+			// alert(site_netloc);
+			top_block = document.getElementById('top-block');
+			top_block.style.display = 'block';
+		}
+	</script>
 {% endblock %}
