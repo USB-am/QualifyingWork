@@ -24,7 +24,7 @@ header {
 	position: sticky;
 	top: 0;
 	background: #fff;
-	z-index: 999999;
+	z-index: 1000;
 }
 
 .logo-container__link {

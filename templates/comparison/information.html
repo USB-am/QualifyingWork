@@ -5,6 +5,7 @@
 {% block title %}
 	<title>{{ title }}</title>
 	<link rel="stylesheet" href="{% static 'css/comparison/information.css' %}">
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -39,17 +40,12 @@
 			</div>
 		</div>
 	</div>
-	<div id="top-block">
-		<div class="top-block__container">
-			<h1>Top block</h1>
+	<div id="top-block" onclick="close_diagram()">
+		<p id="close-button" onclick="close_diagram()"><tt>X</tt></p>
+		<div class="top-block__container" onclick="show_message('Hello!')">
+			<h1>Top block container</h1>
 		</div>
 	</div>
 
-	<script>
-		function open_diagram(site_netloc) {
-			// alert(site_netloc);
-			top_block = document.getElementById('top-block');
-			top_block.style.display = 'block';
-		}
-	</script>
+	<script src="{% static 'js/comparison/top_level.js' %}"></script>
 {% endblock %}
