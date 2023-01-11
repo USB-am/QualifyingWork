@@ -49,39 +49,97 @@ class Page:
 		self.path = urlparse(url).path.split('/')[1:]
 
 
-def delete_params(func):
+def only_this_domain(func):
+	def wrapper(page: Page):
+		links = func(page)
+		page_url = f'{page.scheme}://{page.netloc}'
+		output = []
+
+		for link in links:
+			parsed_link = urlparse(link)
+			temp_link = f'{parsed_link.scheme}://{parsed_link.netloc}'
+
+			if temp_link == page_url:
+				output.append(link)
+
+		return output
+	return wrapper
+
+
+def abs_path_to_static(func):
+	def wrapper(page: Page):
+		links = func(page)
+
+		for ind, link in enumerate(links):
+			try:
+				if link[0] == '/':
+					links[ind] = f'{page.scheme}://{page.netloc}{link}'
+			except IndexError:
+				continue
+
+		return links
+	return wrapper
+
+
+def delete_empty_links(func):
 	def wrapper(*args, **kwargs):
 		links = func(*args, **kwargs)
 
 		for link in links:
-			link.attrs['href'] = link.attrs['href'].split('?')[0]
+			if not len(link) or link == '/':
+				links.remove(link)
+
+		return links
+	return wrapper
+
+
+def delete_params(func):
+	def wrapper(*args, **kwargs):
+		links = func(*args, **kwargs)
+
+		for ind, link in enumerate(links):
+			links[ind] = link.split('?')[0]
 
 		return links
 	return wrapper
 
 
 def delete_internal_postfix(func):
-	def wrapper(page: Page):
-		links = func(page)
+	def wrapper(*args, **kwargs):
+		links = func(*args, **kwargs)
 
-		for link in links:
-			href = link.attrs.get('href')
-			if href is None:
-				link.attrs['href'] = f'{page.scheme}://{page.netloc}'
-				continue
-
-			if not len(href):
-				continue
-
-			if href[0] == '/':
-				link.attrs['href'] = f'{page.scheme}://{page.netloc}{href}'
+		for ind, link in enumerate(links):
+			links[ind] = link.split('#')[0]
 
 		return links
 	return wrapper
 
 
-@delete_params
+def tags_to_hrefs(func):
+	def wrapper(page: Page):
+		link_list = []
+		link_tags = func(page)
+
+		for link_tag in link_tags:
+			href = link_tag.attrs.get('href')
+			if href is None:
+				continue
+
+			if not len(href):
+				continue
+
+			link_list.append(href)
+
+		return link_list
+	return wrapper
+
+
+@only_this_domain
+@abs_path_to_static
+@delete_empty_links
 @delete_internal_postfix
+@delete_params
+@tags_to_hrefs
 def pars_links(page: Page) -> list:
 	html = get_html(page.url)
 	soup = bs(html, 'html.parser')
@@ -89,6 +147,19 @@ def pars_links(page: Page) -> list:
 	link_tags = soup.find_all('a')
 
 	return link_tags
+
+
+def link_path_list_to_dict(links_path: list) -> dict:
+	output = {'': {}}
+
+	for link in links_path:
+		now_app = output['']
+
+		for app in link.path:
+			if app in now_app.keys():
+				now_app = now_app[app]
+
+	return output
 
 
 class Link:
@@ -105,6 +176,7 @@ class Link:
 
 	def __init__(self, link: str):
 		self.link = link
+		self.path = urlparse(link).path.split('/')[1:]
 
 	def __str__(self):
 		return self.link
@@ -115,8 +187,13 @@ class SiteMap:
 		self.site = site
 
 	def get_dict(self) -> dict:
+		link_list = pars_links(Page(self.site.urlroot))
+		links = [Link(link) for link in link_list]
+
+		map_ = link_path_list_to_dict(links)
+
 		output = {
-			self.site.netloc: pars_links(Page(self.site.urlroot)),
+			self.site.netloc: map_,
 		}
 
 		return output
@@ -125,12 +202,14 @@ class SiteMap:
 if __name__ == '__main__':
 	url = 'https://github.com/USB-am?tab=repositories'
 	url = 'https://github.com'
-	l1 = Link(url)
-	l2 = Link(url)
-	# print(l1)
-	# print(l2)
+	# l1 = Link(url)
+	# l2 = Link(url)
 
 	s = Site(url)
 	sm = SiteMap(s)
 
-	print(sm.get_dict())
+	sm_dict = sm.get_dict()
+	print(sm_dict)
+	# for link in sm_dict[s.netloc]:
+		# print(link)
+		# pass
