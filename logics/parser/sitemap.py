@@ -1,26 +1,3 @@
-'''
-import sys
-import logging
-from pysitemap import crawler
-
-
-exclude_urls = ('.pdf', '.jpg', '.jpeg', '.png', '?', '.zip', '.rar', '.ico', '.svg')
-
-
-if __name__ == '__main__':
-	if '--iocp' in sys.argv:
-		from asyncio import events, windows_events
-		sys.argv.remove('--iocp')
-		logging.info('using iocp')
-		el = windows_events.ProactorEventLoop()
-		events.set_event_loop(el)
-
-	# root_url = sys.argv[1]
-	root_url = 'https://www.haikson.com'
-	c = crawler(root_url, out_file='sitemap.txt', out_format='txt', exclude_urls=exclude_urls)
-	print(dir(c), c, type(c))
-'''
-
 from urllib.parse import urlparse
 
 import requests
@@ -49,6 +26,14 @@ class Page:
 		self.path = urlparse(url).path.split('/')[1:]
 
 
+def delete_duplicate(func):
+	def wrapper(*args, **kwargs):
+		links = func(*args, **kwargs)
+
+		return list(set(links))
+	return wrapper
+
+
 def only_this_domain(func):
 	def wrapper(page: Page):
 		links = func(page)
@@ -62,7 +47,7 @@ def only_this_domain(func):
 			if temp_link == page_url:
 				output.append(link)
 
-		return list(set(output))
+		return output
 	return wrapper
 
 
@@ -134,6 +119,7 @@ def tags_to_hrefs(func):
 	return wrapper
 
 
+@delete_duplicate
 @only_this_domain
 @abs_path_to_static
 @delete_empty_links
@@ -171,22 +157,22 @@ class Link:
 
 class Node:
 	''' Представление ветки дерева '''
-	links = []
+	nodes = []
 
 	def __new__(cls, parent, link: Link):
-		f = list(filter(lambda l: l.link==link, cls.links))
+		f = list(filter(lambda node: node.link==link, cls.nodes))
 
 		if f:
 			return f[0]
 
 		instance = super(Node, cls).__new__(cls)
-		cls.links.append(instance)
+		cls.nodes.append(instance)
 		return instance
 
-	def __init__(self, parent, link: Link, childs: list=[]):
+	def __init__(self, parent, link: Link):
 		self.parent = parent
 		self.link = link
-		self.childs = childs
+		self.childs = []
 
 	def add(self, child) -> None:
 		self.childs.append(child)
@@ -200,7 +186,7 @@ def link_path_list_to_dict(links_path: list) -> dict:
 	for link in links_path:
 		current_node = Node(root, link.path[0])
 
-		for app in link.path:
+		for app in link.path[1:]:
 			new_node = Node(current_node, app)
 			current_node.add(new_node)
 
@@ -223,8 +209,9 @@ class SiteMap:
 
 
 if __name__ == '__main__':
-	url = 'https://github.com/USB-am?tab=repositories'
+	# url = 'https://github.com/USB-am?tab=repositories'
 	url = 'https://github.com'
+	# url = 'https://azniirkh.vniro.ru/'
 	# l1 = Link(url)
 	# l2 = Link(url)
 
@@ -232,6 +219,6 @@ if __name__ == '__main__':
 	sm = SiteMap(s)
 
 	map_ = sm.get_sitemap()
-	for child in map_.childs:
-		print(child)
-	# print(map_)
+	# for child in map_.childs:
+	# 	print(child)
+	print(map_)
