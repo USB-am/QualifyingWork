@@ -4,7 +4,7 @@ import logging
 from pysitemap import crawler
 
 
-exclude_urls = ('.pdf', '.jpg', '.jpeg', '.png', '?', '.zip', '.rar', '.ico')
+exclude_urls = ('.pdf', '.jpg', '.jpeg', '.png', '?', '.zip', '.rar', '.ico', '.svg')
 
 
 if __name__ == '__main__':
@@ -49,6 +49,17 @@ class Page:
 		self.path = urlparse(url).path.split('/')[1:]
 
 
+def delete_params(func):
+	def wrapper(*args, **kwargs):
+		links = func(*args, **kwargs)
+
+		for link in links:
+			link.attrs['href'] = link.attrs['href'].split('?')[0]
+
+		return links
+	return wrapper
+
+
 def delete_internal_postfix(func):
 	def wrapper(page: Page):
 		links = func(page)
@@ -69,6 +80,7 @@ def delete_internal_postfix(func):
 	return wrapper
 
 
+@delete_params
 @delete_internal_postfix
 def pars_links(page: Page) -> list:
 	html = get_html(page.url)
