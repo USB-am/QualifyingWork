@@ -62,7 +62,7 @@ def only_this_domain(func):
 			if temp_link == page_url:
 				output.append(link)
 
-		return output
+		return list(set(output))
 	return wrapper
 
 
@@ -149,26 +149,13 @@ def pars_links(page: Page) -> list:
 	return link_tags
 
 
-def link_path_list_to_dict(links_path: list) -> dict:
-	output = {'': {}}
-
-	for link in links_path:
-		now_app = output['']
-
-		for app in link.path:
-			if app in now_app.keys():
-				now_app = now_app[app]
-
-	return output
-
-
 class Link:
 	links = []
 
 	def __new__(cls, link: str):
 		f = list(filter(lambda l: l.link==link, cls.links))
-		if list(f):
-			return list(f)[0]
+		if f:
+			return f[0]
 
 		instance = super(Link, cls).__new__(cls)
 		cls.links.append(instance)
@@ -182,21 +169,57 @@ class Link:
 		return self.link
 
 
+class Node:
+	''' Представление ветки дерева '''
+	links = []
+
+	def __new__(cls, parent, link: Link):
+		f = list(filter(lambda l: l.link==link, cls.links))
+
+		if f:
+			return f[0]
+
+		instance = super(Node, cls).__new__(cls)
+		cls.links.append(instance)
+		return instance
+
+	def __init__(self, parent, link: Link, childs: list=[]):
+		self.parent = parent
+		self.link = link
+		self.childs = childs
+
+	def add(self, child) -> None:
+		self.childs.append(child)
+
+	def __str__(self):
+		return f'{self.link} [{len(self.childs)}]'
+
+
+def link_path_list_to_dict(links_path: list) -> dict:
+	root = Node(None, '')
+	for link in links_path:
+		current_node = Node(root, link.path[0])
+
+		for app in link.path:
+			new_node = Node(current_node, app)
+			current_node.add(new_node)
+
+		root.add(current_node)
+
+	return root
+
+
 class SiteMap:
 	def __init__(self, site: Site):
 		self.site = site
 
-	def get_dict(self) -> dict:
+	def get_sitemap(self) -> dict:
 		link_list = pars_links(Page(self.site.urlroot))
 		links = [Link(link) for link in link_list]
 
 		map_ = link_path_list_to_dict(links)
 
-		output = {
-			self.site.netloc: map_,
-		}
-
-		return output
+		return map_
 
 
 if __name__ == '__main__':
@@ -208,8 +231,7 @@ if __name__ == '__main__':
 	s = Site(url)
 	sm = SiteMap(s)
 
-	sm_dict = sm.get_dict()
-	print(sm_dict)
-	# for link in sm_dict[s.netloc]:
-		# print(link)
-		# pass
+	map_ = sm.get_sitemap()
+	for child in map_.childs:
+		print(child)
+	# print(map_)
