@@ -13,7 +13,7 @@ print(site.meta.description)
 # Map
 '''
 site_map = {
-	domain: [
+	'<domain>': [
 		{'music': []},
 		{'message': []},
 		{'video': []},
