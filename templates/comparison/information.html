@@ -26,6 +26,11 @@
 							Description:<br>
 							<span>{{ site_1.meta.description }}</span>
 						</p>
+						<p class="site-info__keywords">
+							{% for keyword in site_1.meta.keywords %}
+								<p>{{ keyword }}</p>
+							{% endfor %}
+						</p>
 					</div>
 				</div>
 				<div class="site-info site-info__right">
@@ -34,6 +39,11 @@
 						<p class="site-info__description" onclick="open_diagram('{{ site_2.netloc }}')">
 							Description:<br>
 							<span>{{ site_2.meta.description }}</span>
+						</p>
+						<p class="site-info__keywords">
+							{% for keyword in site_1.meta.keywords %}
+								<p><tt>{{ keyword }}</tt></p>
+							{% endfor %}
 						</p>
 					</div>
 				</div>
