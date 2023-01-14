@@ -52,10 +52,9 @@
 .map {
 	width: 35%;
 	min-width: 350px;
-	z-index: 0;
 	position: sticky;
 	top: 10vh;
 	right: 0;
 	max-height: 90vh;
-	z-index: 99999;
+	z-index: 900;
 }
