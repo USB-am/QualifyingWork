@@ -27,23 +27,21 @@
 			<nav>
 				<!-- <a class="nav__item" href="{% url 'index' %}">Homepage</a> -->
 				<div class="nav-item__dropdown">
-					<!--<a class="nav__item" href="{% url 'analysis' %}">Analyze</a>-->
 					<button class="nav-item__drop-button">
 						Analyze <i class="fa fa-caret-down"></i>
 					</button>
 					<div class="nav-item__dropdown-content">
-						<a class="nav-item__wrapper" href="{% url 'analysis' %}">Site analyze</a>
-						<a class="nav-item__wrapper" href=#>Page</a>
+						<a class="nav-item__wrapper" href="{% url 'site_analysis' %}">Site</a>
+						<a class="nav-item__wrapper" href="{% url 'page_analysis' %}">Page</a>
 					</div>
 				</div>
 				<div class="nav-item__dropdown">
-					<!--<a class="nav__item" href="{% url 'comparison' %}">Compare</a>-->
 					<button class="nav-item__drop-button">
 						Compare <i class="fa fa-caret-down"></i>
 					</button>
 					<div class="nav-item__dropdown-content">
-						<a class="nav-item__wrapper" href="{% url 'comparison' %}">Site analyze</a>
-						<a class="nav-item__wrapper" href=#>Page</a>
+						<a class="nav-item__wrapper" href="{% url 'sites_comparison' %}">Site</a>
+						<a class="nav-item__wrapper" href="{% url 'pages_comparison' %}">Page</a>
 					</div>
 				</div>
 				<a class="nav__item" href="{% url 'contacts' %}">Contacts</a>
