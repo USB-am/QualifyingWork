@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block content %}
-	<div class="comparison-container" style="background: url({% static "img/analysis/background.jpg" %}) no-repeat; background-position: center; background-size: cover;">
+	<div class="comparison-container" style="background: url({% static 'img/analysis/background.jpg' %}) no-repeat; background-position: center; background-size: cover;">
 		<div class="wrapper-comparison container">
-			<h1 class="comparison__title">Comparison a web pages</h1>
-			<p class="description">Paste the <b>URL's</b> to get information about the web page of interest</p>
+			<h1 class="comparison__title">Comparison a web sites</h1>
+			<p class="description">Paste the <b>URL's</b> to get information about the web site of interest</p>
 			<form method="POST">
 				{% csrf_token %}
 				<div>
