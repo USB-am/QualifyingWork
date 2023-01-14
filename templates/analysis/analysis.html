@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block content %}
-	<div class="analysis-container" style="background: url({% static "img/analysis/background.jpg" %}) no-repeat; background-position: center; background-size: cover;">
+	<div class="analysis-container" style="background: url({% static 'img/analysis/background.jpg' %}) no-repeat; background-position: center; background-size: cover;">
 		<div class="wrapper-container container">
-			<h1 class="analysis__title">Analyze a web page</h1>
-			<p class="description">Paste the <b>URL</b> to get information about the web page of interest</p>
+			<h1 class="analysis__title">Analyze a web site</h1>
+			<p class="description">Paste the <b>URL</b> to get information about the web site of interest</p>
 			<form method="POST">
 				{% csrf_token %}
 				{% for field in form %}
