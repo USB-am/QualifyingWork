@@ -6,15 +6,19 @@ from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
 from .forms import AnalysisForm
-from logics import Site
+from logics import Site, Page
 
 
 def get_domain(url: str) -> str:
+	if url[-1] == '/':
+		url = url[:-1]
+
 	parsed_url = urlparse(url)
 	scheme = parsed_url.scheme
 	domain = parsed_url.netloc
+	path = '+'.join(parsed_url.path.split('/')[1:])
 
-	return (scheme, domain)
+	return (scheme, domain, path)
 
 
 class AnalysisSiteView(FormView):
@@ -32,7 +36,7 @@ class AnalysisSiteView(FormView):
 
 	def get_success_url(self):
 		url_input = self.request.POST.get('url')
-		scheme, url = get_domain(url_input)
+		scheme, url, _ = get_domain(url_input)
 
 		return reverse_lazy(
 			viewname='analysis_site_info',
@@ -55,11 +59,10 @@ class AnalysisPageView(FormView):
 
 	def get_success_url(self):
 		url_input = self.request.POST.get('url')
-		scheme, url = get_domain(url_input)
-
+		scheme, url, path = get_domain(url_input)
 		return reverse_lazy(
 			viewname='analysis_page_info',
-			kwargs={'scheme': scheme, 'url': url}
+			kwargs={'scheme': scheme, 'url': f'{url}+{path}'}
 		)
 
 
@@ -76,7 +79,7 @@ class AnalysisSiteInfoView(TemplateView):
 		context = super().get_context_data(**kwargs)
 
 		context['title'] = 'Analysis site Info'
-		context['site'] = Site(
+		context['data'] = Site(
 			input_to_domain(context['scheme'], context['url'])
 		)
 
@@ -92,8 +95,9 @@ class AnalysisPageInfoView(TemplateView):
 		context = super().get_context_data(**kwargs)
 
 		context['title'] = 'Analysis page Info'
-		context['site'] = Site(
-			input_to_domain(context['scheme'], context['url'])
-		)
+		page_url = input_to_domain(context['scheme'], context['url'])\
+			.replace('+', '/')
+
+		context['data'] = Page(page_url)
 
 		return context

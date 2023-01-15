@@ -11,6 +11,10 @@ class Page:
 
 	def __init__(self, url: str):
 		self.url = url
+		parsed_url = urlparse(self.url)
+		self.netloc = parsed_url.netloc
+		self.favicon = Favicon(self.url)
+		self.meta = Meta(self.url)
 
 	def __str__(self):
 		return f'<Page url={self.url}>'
