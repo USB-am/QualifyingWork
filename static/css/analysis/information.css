@@ -1,0 +1,26 @@
+.request-container {
+	display: flex;
+	margin-bottom: 10px;
+	padding: 5px 60px;
+	background-color: rgba(0, 0, 0, .5);
+	height: 30px;
+}
+.request-container input {
+	min-width: 350px;
+	width: 25%;
+	height: 30px;
+	font-size: 20px;
+	padding-left: 15px;
+}
+.request-container button {
+	background: #fff;
+	width: 35px;
+	height: 30px;
+	border-radius: 0 50% 50% 0;
+	/*border-left: 2px solid rgba(0, 0, 0, .5);*/
+	padding: 0 5px 0 0;
+	cursor: pointer;
+}
+.request-container button:hover {
+	background: #ccc;
+}

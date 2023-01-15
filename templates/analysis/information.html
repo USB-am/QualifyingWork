@@ -3,17 +3,24 @@
 {% load static %}
 
 {% block title %}
-	<title>{{ site.netloc }} - {{ title }}</title>
+	<title>{{ data.netloc }} - {{ title }}</title>
+	<link rel="stylesheet" href="{% static 'css/analysis/information.css' %}">
 {% endblock %}
 
 {% block content %}
+	<div class="request-container container">
+		<input id="request" type="text" name="request" placeholder="Enter request...">
+		<button id="request-submit">
+			<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+		</button>
+	</div>
 	<div class="information-container" style="min-height: 90vh;">
-		<h1>{{ site.netloc }} - {{ title }}</h1>
+		<h1>{{ data.netloc }} - {{ title }}</h1>
 		<div class="global-info">
 			<div class="global-info__wrapper container">
 				<div class="domain">
 					<div class="site-logo">
-						<img src="{{ site.favicon.href }}" alt="The icon of the site being analyzed">
+						<img src="{{ data.favicon.href }}" alt="The icon of the data being analyzed">
 					</div>
 				</div>
 			</div>
