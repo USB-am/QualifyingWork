@@ -1,9 +1,7 @@
 from urllib.parse import urlparse
 
 from logics.parser import Favicon, Meta
-
-
-# https://vc.ru/marketing/397043-prodvizhenie-i-raskrutka-veb-sayta-dlya-chego-eto-nuzhno#:~:text=Seo%20продвижение%20веб%20сайта%20способствует,являться%20увеличение%20трафика%20и%20охватов.
+from logics.analyzer.text_analyze import TextAnalyzer
 
 
 class Page:
@@ -15,6 +13,7 @@ class Page:
 		self.netloc = parsed_url.netloc
 		self.favicon = Favicon(self.url)
 		self.meta = Meta(self.url)
+		self.text = TextAnalyzer(self)
 
 	def __str__(self):
 		return f'<Page url={self.url}>'
