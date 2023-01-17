@@ -35,9 +35,10 @@
 				</h4>
 			</div>
 		</div>
-		<div class="text-analyzer">
-			<p>{{ data.text.occurrence }}</p>
-			<p>{{ data.text.occurrence_20 }}</p>
+		<div class="text-analyzer container">
+			<p>occurrence: {{ data.text.occurrence }}</p>
+			<p>occurrence_20: {{ data.text.occurrence_20 }}</p>
+			<p>synonyms: {{ synonyms }}</p>
 		</div>
 	</div>
 {% endblock %}

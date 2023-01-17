@@ -3,6 +3,8 @@ from urllib.parse import urlparse
 from logics.parser import Favicon, Meta
 from logics.analyzer.text_analyze import TextAnalyzer
 
+from logics.parser.wiktionary import get_synonyms
+
 
 class Page:
 	''' Базовое представление страницы сайта '''
@@ -14,6 +16,7 @@ class Page:
 		self.favicon = Favicon(self.url)
 		self.meta = Meta(self.url)
 		self.text = TextAnalyzer(self)
+		self.synonyms = get_synonyms('привет')
 
 	def __str__(self):
 		return f'<Page url={self.url}>'
