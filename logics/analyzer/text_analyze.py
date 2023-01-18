@@ -1,5 +1,6 @@
 import string
 from typing import Union
+from dataclasses import dataclass
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -14,6 +15,17 @@ def delete_punctuation_symbols(text: str) -> str:
 	translated_text = text.translate(maketrans_text)
 
 	return translated_text
+
+
+def get_synonyms_from_string(text: str) -> list:
+	t = delete_punctuation_symbols(text)
+	words = t.split(' ')
+	synonyms = []
+	for word in words:
+		s = WikiDict.get_synonyms(word)
+		synonyms.extend(s)
+
+	return synonyms
 
 
 def get_text_for_analyze(soup: bs) -> str:
@@ -31,8 +43,27 @@ def get_percent_text(text: str, percent: Union[float, int]) -> str:
 	return text[:index]
 
 
-def get_request_entry(*a):
-	pass
+@dataclass
+class Request:
+	'''
+	Класс с исформацией о запросе
+	'''
+	request: str
+	clean: int
+	partian: int
+
+	def __str__(self):
+		return f'<Request "{request}">'
+
+
+def get_request_entry(request: str, text: str) -> Request:
+	clean_entry = text.count(request)
+	# synonyms = get_synonyms_from_string(request)
+	words = delete_punctuation_symbols(request)
+	words = t.split(' ')
+	synonyms = [*WikiDict.get_synonyms(word) for word in words]
+	all_combinations = product(synonyms, repeat=len(words))
+	partial_entry = None
 
 
 class TextAnalyzer:
