@@ -1,6 +1,7 @@
 import string
 from typing import Union
 from dataclasses import dataclass
+from itertools import product
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -58,11 +59,17 @@ class Request:
 
 def get_request_entry(request: str, text: str) -> Request:
 	clean_entry = text.count(request)
-	# synonyms = get_synonyms_from_string(request)
-	words = delete_punctuation_symbols(request)
-	words = t.split(' ')
-	synonyms = [*WikiDict.get_synonyms(word) for word in words]
-	all_combinations = product(synonyms, repeat=len(words))
+	# clear_text = delete_punctuation_symbols()
+	key_words = delete_punctuation_symbols(request).lower().split(' ')
+
+	synonyms = []
+	for word in key_words:
+		synonyms_list = WikiDict.get_synonyms(word)
+		if synonyms_list is not None:
+			synonyms.extend(synonyms_list)
+
+	all_combinations = product(synonyms, repeat=len(key_words))
+	[print(combo) for combo in all_combinations]
 	partial_entry = None
 
 
@@ -75,7 +82,7 @@ class TextAnalyzer:
 		html = TextParser.get_html(self.page.url)
 		self.soup = bs(html, 'html.parser')
 
-		test_request = 'About'
+		test_request = 'Hello, world!'
 		self.occurrence = self.get_occurrence_request(test_request)
 		self.occurrence_20 = self.get_first_occurrence_request(test_request)
 		self.distribution = self.even_distribution(test_request)
@@ -124,6 +131,6 @@ class TextAnalyzer:
 		'''
 
 		page_text = get_text_for_analyze(self.soup)
-		this_mean = get_request_entry(requests, page_text)
+		this_mean = get_request_entry(request, page_text)
 
 		return 'even_distribution'
