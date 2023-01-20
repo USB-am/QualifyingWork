@@ -19,12 +19,13 @@ def delete_punctuation_symbols(text: str) -> str:
 
 
 def get_synonyms_from_string(text: str) -> list:
-	t = delete_punctuation_symbols(text)
+	t = delete_punctuation_symbols(text).lower()
 	words = t.split(' ')
 	synonyms = []
-	for word in words:
-		s = WikiDict.get_synonyms(word)
-		synonyms.extend(s)
+	for word in key_words:
+		synonyms_list = WikiDict.get_synonyms(word)
+		if synonyms_list is not None:
+			synonyms.extend(synonyms_list)
 
 	return synonyms
 
@@ -44,6 +45,13 @@ def get_percent_text(text: str, percent: Union[float, int]) -> str:
 	return text[:index]
 
 
+def split_text(text: str) -> list:
+	t = delete_punctuation_symbols(text).lower()
+	splited_text = t.split(' ')
+
+	return splited_text
+
+
 @dataclass
 class Request:
 	'''
@@ -59,12 +67,11 @@ class Request:
 
 def get_request_entry(request: str, text: str) -> Request:
 	clean_entry = text.count(request)
-	# clear_text = delete_punctuation_symbols()
-	key_words = delete_punctuation_symbols(request).lower().split(' ')
+	key_words = split_text(request)
 
 	synonyms = []
-	for word in key_words:
-		synonyms_list = WikiDict.get_synonyms(word)
+	for key_word in key_words:
+		synonyms_list = WikiDict.get_synonyms(key_word)
 		if synonyms_list is not None:
 			synonyms.extend(synonyms_list)
 
