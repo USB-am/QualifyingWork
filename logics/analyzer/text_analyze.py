@@ -52,6 +52,16 @@ def split_text(text: str) -> list:
 	return splited_text
 
 
+def get_inner_synonyms_count(combinations: list, text: str) -> int:
+	output = 0
+	for combination in combinations:
+		combo = ''.join(combination)
+		if combo in text:
+			output += 1
+
+	return output
+
+
 @dataclass
 class Request:
 	'''
@@ -76,8 +86,11 @@ def get_request_entry(request: str, text: str) -> Request:
 			synonyms.extend(synonyms_list)
 
 	all_combinations = product(synonyms, repeat=len(key_words))
-	[print(combo) for combo in all_combinations]
-	partial_entry = None
+	partial_entry = get_inner_synonyms_count(all_combinations, text)
+
+	req = Request(request, clean_entry, partial_entry)
+
+	return req
 
 
 class TextAnalyzer:
