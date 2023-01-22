@@ -9,6 +9,7 @@ from bs4 import element
 
 from logics.parser import text as TextParser
 from logics.parser import wiktionary as WikiDict
+from logics.parser import google_api as GoogleApi
 
 
 def delete_punctuation_symbols(text: str) -> str:
@@ -72,7 +73,7 @@ class Request:
 	partian: int
 
 	def __str__(self):
-		return f'<Request "{request}">'
+		return f'<Request "{self.request}">'
 
 
 def get_request_entry(request: str, text: str) -> Request:
@@ -152,5 +153,6 @@ class TextAnalyzer:
 
 		page_text = get_text_for_analyze(self.soup)
 		this_mean = get_request_entry(request, page_text)
+		top_1_page = GoogleApi.get_top_page(request)
 
 		return 'even_distribution'
