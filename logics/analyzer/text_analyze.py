@@ -73,19 +73,31 @@ class Request:
 	partian: int
 
 	def __str__(self):
-		return f'<Request "{self.request}">'
+		# return f'<Request "{self.request}">'
+		return f'<Request ({id(self)})>\nrequest: {self.request}\n' + \
+			f'clean: {self.clean}\npartian: {self.partian}\n'
+
+	@property
+	def queries(self) -> int:
+		return self.clean + self.partian
+
+
+def get_synonyms_by_key_words(key_words: list) -> list:
+	synonyms = []
+
+	for key_word in key_words:
+		synonyms_list = WikiDict.get_synonyms(key_word)
+		if synonyms_list is not None:
+			synonyms.extend(synonyms_list)
+
+	return synonyms
 
 
 def get_request_entry(request: str, text: str) -> Request:
 	clean_entry = text.count(request)
 	key_words = split_text(request)
 
-	synonyms = []
-	for key_word in key_words:
-		synonyms_list = WikiDict.get_synonyms(key_word)
-		if synonyms_list is not None:
-			synonyms.extend(synonyms_list)
-
+	synonyms = get_synonyms_by_key_words(key_words)
 	all_combinations = product(synonyms, repeat=len(key_words))
 	partial_entry = get_inner_synonyms_count(all_combinations, text)
 
@@ -151,8 +163,19 @@ class TextAnalyzer:
 		~request: str - запрос
 		'''
 
+		without_punctuation_request = delete_punctuation_symbols(request).lower()
+
 		page_text = get_text_for_analyze(self.soup)
-		this_mean = get_request_entry(request, page_text)
-		top_1_page = GoogleApi.get_top_page(request)
+		this_mean = get_request_entry(without_punctuation_request, page_text)
+		top_1_page = GoogleApi.get_top_page_url(without_punctuation_request)
+		top_1_text = get_text_for_analyze(bs(top_1_page, 'html.parser'))
+		top_1_mean = get_request_entry(without_punctuation_request, top_1_text)
+
+		try:
+			coeff = this_mean.queries / top_1_mean.queries
+		except ZeroDivisionError as exc:
+			coeff = 1
+
+		print(f'Coeff = {coeff}')
 
 		return 'even_distribution'
