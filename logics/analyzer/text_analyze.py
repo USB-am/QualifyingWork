@@ -73,7 +73,6 @@ class Request:
 	partian: int
 
 	def __str__(self):
-		# return f'<Request "{self.request}">'
 		return f'<Request ({id(self)})>\nrequest: {self.request}\n' + \
 			f'clean: {self.clean}\npartian: {self.partian}\n'
 
@@ -115,10 +114,11 @@ class TextAnalyzer:
 		html = TextParser.get_html(self.page.url)
 		self.soup = bs(html, 'html.parser')
 
-		test_request = 'Hello, world!'
+		test_request = ' Fire department'
 		self.occurrence = self.get_occurrence_request(test_request)
 		self.occurrence_20 = self.get_first_occurrence_request(test_request)
 		self.distribution = self.even_distribution(test_request)
+		self.this_dist, self.other_dist = self.even_distribution(test_request)
 
 	def get_occurrence_request(self, request: str) -> bool:
 		'''
@@ -178,4 +178,4 @@ class TextAnalyzer:
 
 		print(f'Coeff = {coeff}')
 
-		return 'even_distribution'
+		return this_mean, top_1_mean

@@ -16,7 +16,6 @@ class Page:
 		self.favicon = Favicon(self.url)
 		self.meta = Meta(self.url)
 		self.text = TextAnalyzer(self)
-		self.synonyms = get_synonyms('привет')
 
 	def __str__(self):
 		return f'<Page url={self.url}>'
