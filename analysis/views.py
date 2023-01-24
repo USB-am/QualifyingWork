@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 from .forms import AnalysisForm
 from logics import Site, Page
+from logics.tools import URL, Request
 
 
 def get_domain(url: str) -> str:
@@ -97,7 +98,9 @@ class AnalysisPageInfoView(TemplateView):
 		context['title'] = 'Analysis page Info'
 		page_url = input_to_domain(context['scheme'], context['url'])\
 			.replace('+', '/')
+		url = URL(page_url)
+		request = Request(URL(page_url), self.request.headers)
 
-		context['data'] = Page(page_url)
+		context['data'] = Page(request)
 
 		return context
