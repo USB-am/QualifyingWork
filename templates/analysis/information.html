@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-	<title>{{ data.netloc }} - {{ title }}</title>
+	<title>{{ data.url.netloc }} - {{ title }}</title>
 	<link rel="stylesheet" href="{% static 'css/analysis/information.css' %}">
 {% endblock %}
 
@@ -15,12 +15,12 @@
 		</button>
 	</div>
 	<div class="information-container" style="min-height: 90vh;">
-		<h1>{{ data.netloc }} - {{ title }}</h1>
+		<h1>{{ data.url.netloc }} - {{ title }}</h1>
 		<div class="global-info">
 			<div class="global-info__wrapper container">
 				<div class="domain">
 					<div class="site-logo">
-						<img src="{{ data.favicon.href }}" alt="The icon of the data being analyzed">
+						<img src="{{ data.analyzer.favicon }}" alt="The icon of the data being analyzed">
 					</div>
 				</div>
 			</div>
@@ -39,21 +39,13 @@
 							
 						</tr>
 					</table>
-					<!--
-					<span class="google-analytics__value">
-						{{ data.url }}
-					</span>
-					-->
 				</h4>
 			</div>
 		</div>
-		<!--
-		<div class="text-analyzer container">
-			<p>occurrence: {{ data.text.occurrence }}</p>
-			<p>occurrence_20: {{ data.text.occurrence_20 }}</p>
-			<p>This distribution: {{ data.text.this_dist }}</p>
-			<p>Other distribution: {{ data.text.other_dist }}</p>
+		<div>
+			<p>{{ data.analyzer.desctiption }}</p>
+			<p>{{ data.analyzer.keywords }}</p>
+			<p> </p>
 		</div>
-		-->
 	</div>
 {% endblock %}
