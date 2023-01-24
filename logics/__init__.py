@@ -1,37 +1,36 @@
-from urllib.parse import urlparse
-
-from logics.parser import Favicon, Meta
-from logics.analyzer.text_analyze import TextAnalyzer
-
-from logics.parser.wiktionary import get_synonyms
+from .analyzer import Analyzer
+from .tools import Request
 
 
-class Page:
-	''' Базовое представление страницы сайта '''
+class Page():
+	'''
+	Базовое представление веб-страницы
+	:params
+	~request: Request - запрос, включающий URL и headers пользователя
+	'''
 
-	def __init__(self, url: str):
-		self.url = url
-		parsed_url = urlparse(self.url)
-		self.netloc = parsed_url.netloc
-		self.favicon = Favicon(self.url)
-		self.meta = Meta(self.url)
-		self.text = TextAnalyzer(self)
+	def __init__(self, request: Request):
+		self.request = request
+
+		self.url = request.url
+		self.analyzer = Analyzer(request)
 
 	def __str__(self):
-		return f'<Page url={self.url}>'
+		return f'<Page "{self.url}">'
 
 
-class Site:
-	''' Базовое представление сайта '''
+class Site():
+	'''
+	Базовое представление веб-ресурса
+	:params
+	~request: Request - запрос, включающий URL и headers пользователя
+	'''
 
-	def __init__(self, domain: str):
-		self.domain = domain
-		self.netloc = urlparse(self.domain).netloc
-		self.childs = {
-			self.domain: Page(self.domain),
-		}
-		self.favicon = Favicon(self.domain)
-		self.meta = Meta(self.domain)
+	def __init__(self, request: Request):
+		self.request = request
+
+		self.url = request.url
+		self.analyzer = Analyzer(request)
 
 	def __str__(self):
-		return f'<Site domain={self.domain}>'
+		return f'<Site "self.url.domain">'
