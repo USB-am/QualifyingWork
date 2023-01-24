@@ -1,28 +1,12 @@
-import requests
-from bs4 import BeautifulSoup as bs
+from . import get_soup
 
 
-def get_html(url: str) -> str:
-	html = requests.get(url).text
+def get_favicon(request: Request) -> str:
+	soup = get_soup(request)
 
-	return html
+	favicon_tag = soup.find('link', attrs={'rel': re.compile('.*icon.*')})
 
+	if favicon_tag is None:
+		return ''
 
-class Favicon:
-	def __init__(self, domain: str):
-		self.domain = domain
-		self.href = self.__parse_href()
-
-	def __parse_href(self) -> str:
-		soup = bs(get_html(self.domain), 'html.parser')
-		icon_tag = soup.find('link', attrs={'rel': 'icon'})
-
-		if icon_tag is None:
-			return ''
-
-		href = icon_tag.attrs.get('href')
-		if href is not None:
-			if href[0] == '/':
-				href = self.domain + href
-
-		return href
+	return favicon_tag.attrs.get('href', '')
