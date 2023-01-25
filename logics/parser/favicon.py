@@ -1,4 +1,7 @@
-from . import get_soup
+import re
+
+from logics.parser.parse_tools import get_soup
+from logics.tools import Request
 
 
 def get_favicon(request: Request) -> str:

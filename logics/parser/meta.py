@@ -1,4 +1,5 @@
-from . import get_soup
+from logics.parser.parse_tools import get_soup
+from logics.tools import Request
 
 
 def get_desctiption(request: Request) -> str:
