@@ -17,8 +17,8 @@ class Analyzer:
 		return Parser.get_favicon(self.request)
 
 	@property
-	def desctiption(self) -> str:
-		return Parser.get_desctiption(self.request)
+	def description(self) -> str:
+		return Parser.get_description(self.request)
 
 	@property
 	def keywords(self) -> list:

@@ -2,7 +2,7 @@ from logics.parser.parse_tools import get_soup
 from logics.tools import Request
 
 
-def get_desctiption(request: Request) -> str:
+def get_description(request: Request) -> str:
 	soup = get_soup(request)
 
 	meta_tag = soup.find('meta', attrs={'name': 'description'})
