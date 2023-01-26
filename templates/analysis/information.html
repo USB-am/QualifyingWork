@@ -8,44 +8,31 @@
 {% endblock %}
 
 {% block content %}
-	<div class="request-container container">
-		<input id="request" type="text" name="request" placeholder="Enter request...">
-		<button id="request-submit">
-			<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-		</button>
-	</div>
-	<div class="information-container" style="min-height: 90vh;">
-		<h1>{{ data.url.netloc }} - {{ title }}</h1>
-		<div class="global-info">
-			<div class="global-info__wrapper container">
-				<div class="domain">
-					<div class="site-logo">
-						<img src="{{ data.analyzer.favicon }}" alt="The icon of the data being analyzed">
+	<div class="container">
+		<div class="site-info__container">
+			<div class="site-info__logo-container">
+				<img class="site-info__logo" src="{{ data.analyzer.favicon }}" alt="The icon of the data being analyzed.">
+			</div>
+			<div class="site-info__container-wrapper">
+				<h1 class="site-info__domain">{{ data.url.netloc.upper }}</h1>
+				<p class="site-info__short-description">
+					{{ data.analyzer.description }}
+				</p>
+			</div>
+
+			<!--
+			<h1 class="site-info__domain">{{ data.url.netloc.upper }}</h1>
+			<div class="site-info__container-wrapper">
+				<div class="site-info__logo-container">
+					<img class="site-info__logo" src="{{ data.analyzer.favicon }}" alt="The icon of the data being analyzed.">
+				</div>
+				<div class="site-info__progressbar">
+					<div class="site-info__short-description">
+						<p>{{ data.analyzer.description }}</p>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="google-analytics container">
-			<div class="google-analytics__wrapper">
-				<h4>
-					External links:
-					<table>
-						<tr>
-							<th>№</th>
-							<th>Status</th>
-							<th>Site</th>
-						</tr>
-						<tr>
-							
-						</tr>
-					</table>
-				</h4>
-			</div>
-		</div>
-		<div>
-			<p>{{ data.analyzer.desctiption }}</p>
-			<p>{{ data.analyzer.keywords }}</p>
-			<p> </p>
+			-->
 		</div>
 	</div>
 {% endblock %}
