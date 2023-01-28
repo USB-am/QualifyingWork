@@ -102,5 +102,6 @@ class AnalysisPageInfoView(TemplateView):
 		request = Request(URL(page_url), self.request.headers)
 
 		context['data'] = Page(request)
+		context['range'] = [i for i in range(10)]
 
 		return context

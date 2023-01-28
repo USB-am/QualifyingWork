@@ -34,3 +34,36 @@
 	cursor: pointer;
 	transition: .3s;
 }
+
+/* === INDICATORS === */
+.indicators__container {
+	width: 100%;
+	margin-top: 20px;
+}
+.indicators__title {
+	font-size: 20px;
+	color: rgba(0, 0, 0, .8);
+	margin-bottom: 10px;
+}
+.indicators__table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: 0;
+}
+.indicators__table tr:hover {
+	background: #ccc;
+}
+.indicators__table td {
+	padding: 10px;
+	cursor: pointer;
+}
+.indicator__name {
+	width: 25%;
+}
+.indicator__status {
+	width: 70%;
+}
+.indicator__info {
+	width: 5%;
+}
+/* === INDICATORS === */

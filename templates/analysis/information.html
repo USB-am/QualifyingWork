@@ -28,20 +28,22 @@
 					</div>
 				</div>
 			</div>
-
-			<!--
-			<h1 class="site-info__domain">{{ data.url.netloc.upper }}</h1>
-			<div class="site-info__container-wrapper">
-				<div class="site-info__logo-container">
-					<img class="site-info__logo" src="{{ data.analyzer.favicon }}" alt="The icon of the data being analyzed.">
-				</div>
-				<div class="site-info__progressbar">
-					<div class="site-info__short-description">
-						<p>{{ data.analyzer.description }}</p>
-					</div>
-				</div>
-			</div>
-			-->
+		</div>
+		<div class="indicators__container">
+			<h2 class="indicators__title">Indicators</h2>
+			<table class="indicators__table">
+				{% for i in range %}
+					<tr>
+						<td class="indicator__name">Yandex.Metrix</td>
+						<td class="indicator__status">Exists</td>
+						<td class="indicator__info">
+							<div id="help-button" class="help-button">
+								<i class="fa-sharp fa-solid fa-circle-question"></i>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
 		</div>
 	</div>
 {% endblock %}
