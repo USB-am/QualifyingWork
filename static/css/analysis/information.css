@@ -80,3 +80,46 @@
 	width: 5%;
 }
 /* === INDICATORS === */
+
+/* === COMPARE === */
+.compare__container {
+	margin-top: 20px;
+}
+.compare__container-wrapper {
+	min-height: 75vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, .7);
+}
+.compare__title {
+	margin-bottom: 20px;
+	font-size: 56px;
+	text-align: center;
+	font-weight: 900;
+	letter-spacing: 5px;
+	color: #fff;
+	text-transform: uppercase;
+}
+#comparison__input {
+	min-width: 45%;
+	border-radius: 10px;
+	padding: 7px 0;
+	padding-left: 10px;
+	font-size: 20px;
+}
+.submit-btn {
+	margin-top: 25px;
+	background-color: var(--accent-color);
+	padding: 10px 25px;
+	font-size: 20px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: .3s;
+}
+.submit-btn:hover {
+	transition: .3s;
+	background-color: var(--accent-color-hover);
+}
+/* === COMPARE === */
