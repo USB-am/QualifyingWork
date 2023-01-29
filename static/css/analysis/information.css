@@ -25,9 +25,22 @@
 	font-size: 16px;
 	margin-bottom: 20px;
 }
+.progressbar__container {
+	margin-top: 15px;
+	position: relative;
+}
 .progressbar {
-	width: 50%;
-	height: 20px;
+	width: 75%;
+	height: 30px;
+	margin: 0 12.5%;
+}
+.progressbar__info {
+	text-align: center;
+}
+#progressbar__help-button {
+	position: absolute;
+	right: 7.5%;
+	top: 0;
 }
 .help-button {
 	font-size: 20px;
