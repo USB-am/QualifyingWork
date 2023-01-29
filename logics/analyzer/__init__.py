@@ -23,3 +23,7 @@ class Analyzer:
 	@property
 	def keywords(self) -> list:
 		return Parser.get_keywords(self.request)
+
+	@property
+	def metrics(self) -> dict:
+		return Parser.get_metrics(self.request.url.netloc)

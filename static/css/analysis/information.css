@@ -86,7 +86,7 @@
 	margin-top: 20px;
 }
 .compare__container-wrapper {
-	min-height: 75vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
