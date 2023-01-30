@@ -48,6 +48,33 @@
 	transition: .3s;
 }
 
+.visits__container {
+	display: flex;
+	justify-content: space-evenly;
+}
+.visit__block {
+	padding: 10px;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	cursor: pointer;
+	transition: .3s;
+}
+.visit__block:hover {
+	transition: .3s;
+	background: #efefef;
+}
+.visit__block i {
+	width: 20px;
+	font-size: 20px;
+	font-weight: bold;
+}
+.visit__value {
+	margin-top: 5px;
+	font-size: 16px;
+	color: rgba(0, 0, 0, .8);
+}
+
 /* === INDICATORS === */
 .indicators__container {
 	width: 100%;

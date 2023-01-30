@@ -27,16 +27,42 @@
 						<h4>50%/100%</h4>
 					</div>
 				</div>
+				<div class="visits__container">
+					<div class="visit__block">
+						<i class="fa-solid fa-circle-user"></i>
+						<p class="visit__value" title="Visitors">
+							{{ data.analyzer.visits.visitors }}
+						</p>
+					</div>
+					<div class="visit__block">
+						<i class="fa-solid fa-eye"></i>
+						<p class="visit__value" title="Views">
+							{{ data.analyzer.visits.views }}
+						</p>
+					</div>
+					<div class="visit__block">
+						<i class="fa-solid fa-globe"></i>
+						<p class="visit__value" title="Place in the world">
+							{{ data.analyzer.visits.world_place }}
+						</p>
+					</div>
+					<div class="visit__block">
+						<img class="visit__flag" alt="County flag">
+						<p class="visit__value" title="Place in the country">
+							{{ data.analyzer.visits.county_place }}
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="indicators__container">
 			<h2 class="indicators__title">Indicators</h2>
 			<table class="indicators__table">
-				<h1>{{ data.analyzer.metrics }}</h1>
-				{% for i in range %}
+				<!-- <h1>{{ data.analyzer.metrics }}</h1> -->
+				{% for metric in data.analyzer.metrics %}
 					<tr>
 						<td class="indicator__name">Yandex.Metrix</td>
-						<td class="indicator__status">Exists</td>
+						<td class="indicator__status">{{ metric.text }}</td>
 						<td class="indicator__info">
 							<div id="help-button" class="help-button">
 								<i class="fa-sharp fa-solid fa-circle-question"></i>

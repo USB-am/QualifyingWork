@@ -11,8 +11,16 @@ def get_metrics(netloc: str) -> dict:
 	request = Request(__URL.format(netloc=netloc), {})
 	soup = get_soup(request)
 
-	metric_blocks = soup.find_all('div', attrs={'class': 'prcy-hdauij'})
-	for metric_block in metric_blocks:
-		print(metric_block.text)
+	metric_blocks = soup.find_all('div', attrs={'class': 'basetest__wrapper'})
+	# for metric_block in metric_blocks:
+	# 	print(metric_block.text)
 
-	return {}
+	return list(metric_blocks)
+
+
+def get_visits(netloc: str) -> str:
+	request = Request(__URL.format(netloc=netloc), {})
+	soup = get_soup(request)
+
+	visits_block = soup.find('div', class_='prcy-6ze85i e1a2a9ru1')
+	print(visits_block.text)
