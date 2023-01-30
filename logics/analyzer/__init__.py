@@ -27,3 +27,7 @@ class Analyzer:
 	@property
 	def metrics(self) -> dict:
 		return Parser.get_metrics(self.request.url.netloc)
+
+	@property
+	def visits(self) -> dict:
+		return Parser.get_visits(self.request.url.netloc)
