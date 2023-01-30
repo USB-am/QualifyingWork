@@ -1,6 +1,19 @@
 from urllib.parse import urlparse
 
+import requests
+from bs4 import BeautifulSoup as bs
+
 from django.http.request import HttpHeaders
+
+
+def get_html(url: str, headers: dict={}, **parameters) -> str:
+	html = requests.get(
+		url,
+		headers=headers,
+		params=parameters
+	).text
+
+	return html
 
 
 class URL:
@@ -33,7 +46,9 @@ class Request:
 
 	def __init__(self, url: URL, headers: HttpHeaders):
 		self.url = url
+		print(f'\n\n{self.url} [{type(self.url)}]', end='\n\n')
 		self.headers = dict(headers)
+		self.soup = bs(get_html(url), 'html.parser')
 
 	def __str__(self):
 		return f'<Request {self.url}>'

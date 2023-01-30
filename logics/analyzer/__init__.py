@@ -12,22 +12,10 @@ class Analyzer:
 	def __init__(self, request: Request):
 		self.request = request
 
-	@property
-	def favicon(self) -> str:
-		return Parser.get_favicon(self.request)
+		self.favicon = Parser.get_favicon(self.request)
+		self.description = Parser.get_description(self.request)
+		self.keywords = Parser.get_keywords(self.request)
 
-	@property
-	def description(self) -> str:
-		return Parser.get_description(self.request)
-
-	@property
-	def keywords(self) -> list:
-		return Parser.get_keywords(self.request)
-
-	@property
-	def metrics(self) -> dict:
-		return Parser.get_metrics(self.request.url.netloc)
-
-	@property
-	def visits(self) -> dict:
-		return Parser.get_visits(self.request.url.netloc)
+		self.pr_cy_parser = Parser.PrCyParser(self.request.url.netloc)
+		self.metrics = self.pr_cy_parser.get_metrics()
+		self.visits = self.pr_cy_parser.get_visits()

@@ -42,7 +42,8 @@ def get_maximum_size_icon(favicon_tags: ResultSet) -> Favicon:
 
 
 def get_favicon(request: Request) -> str:
-	soup = get_soup(request)
+	# soup = get_soup(request)
+	soup = request.soup
 
 	favicon_tags = soup.find_all('link', attrs={'rel': re.compile('.*icon.*')})
 	max_size_icon = get_maximum_size_icon(favicon_tags)
