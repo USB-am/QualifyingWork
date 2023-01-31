@@ -46,7 +46,6 @@ class Request:
 
 	def __init__(self, url: URL, headers: HttpHeaders):
 		self.url = url
-		print(f'\n\n{self.url} [{type(self.url)}]', end='\n\n')
 		self.headers = dict(headers)
 		self.soup = bs(get_html(url), 'html.parser')
 
