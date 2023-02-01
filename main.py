@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from parser import Page
+
 
 web_resource_url = 'https://habr.com/ru/post/206264/'
 #web_resource_url = input(
@@ -8,7 +10,7 @@ web_resource_url = 'https://habr.com/ru/post/206264/'
 
 
 def main():
-	pass
+	page = Page(web_resource_url)
 
 
 if __name__ == '__main__':
