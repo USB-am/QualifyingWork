@@ -10,7 +10,9 @@ def get_page_information(url: str) -> dict:
 	output = {}
 
 	soup = get_soup(url)
-	print(dir(soup))
+	# print(dir(soup))
+	print(soup.title.string)
+	print(soup.h1.string)
 
 	return output
 
@@ -22,4 +24,4 @@ class Page:
 		self.url = url
 
 		page_information = get_page_information(self.url)
-		self.__class__.__dict__.update(page_information)
+		self.__dict__.update(page_information)

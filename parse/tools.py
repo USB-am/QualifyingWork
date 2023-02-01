@@ -22,6 +22,6 @@ def get_soup(url: str, **params) -> BeautifulSoup:
 	: params	- параметры строки запроса.
 	'''
 	html = get_html(url, **params)
-	soup = BeautifulSoup(html, 'hmtl.parser')
+	soup = BeautifulSoup(html, 'html.parser')
 
 	return soup
