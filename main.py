@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# from parser import Page
-import parse
+from parse import Page
+from analyzer import Analyzer
 
 
 web_resource_url = 'https://habr.com/ru/post/206264/'
@@ -11,7 +11,8 @@ web_resource_url = 'https://habr.com/ru/post/206264/'
 
 
 def main():
-	page = parse.Page(web_resource_url)
+	page = Page(web_resource_url)
+	analyzer = Analyzer(page)
 
 
 if __name__ == '__main__':

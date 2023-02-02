@@ -12,6 +12,7 @@ def get_page_information(url: str) -> dict:
 
 	output = {
 		'title': soup.title.string,
+		'h1': soup.h1.string,
 		'text': TextParser.get_full_text(soup),
 		'description': TextParser.get_meta_content(soup, 'description'),
 		'keywords': TextParser.get_keywords(soup),
@@ -21,11 +22,10 @@ def get_page_information(url: str) -> dict:
 
 
 class Page:
-	''' Представление веб-страницы '''
+	' Представление информации о веб-страницы '
 
 	def __init__(self, url: str):
 		self.url = url
 
 		page_information = get_page_information(self.url)
 		self.__dict__.update(page_information)
-		print(self.keywords)
