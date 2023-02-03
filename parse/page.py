@@ -29,3 +29,6 @@ class Page:
 
 		page_information = get_page_information(self.url)
 		self.__dict__.update(page_information)
+
+	def __str__(self):
+		return f'<Page "{self.url}">'

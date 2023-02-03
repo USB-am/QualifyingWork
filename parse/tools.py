@@ -9,7 +9,9 @@ def get_html(url: str, **params) -> str:
 	: url: str	- url-адрес страницы;
 	: params	- параметры строки запроса.
 	'''
-	html = requests.get(url, **params).text
+	response = requests.get(url, params=params)
+	print(f'Response url={response.url}')
+	html = response.text
 
 	return html
 
