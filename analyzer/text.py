@@ -1,4 +1,16 @@
+from typing import Union
+
 from fuzzywuzzy import fuzz, process
+
+
+def _get_text_percent(text: str, percent: Union[int, float]=100) -> str:
+	' Обрезает текст до определенного процента '
+
+	text_length = len(text)
+	finish_index = int(text_length / 100 * percent)
+	sliced_text = text[:finish_index]
+
+	return sliced_text
 
 
 class Correlation:

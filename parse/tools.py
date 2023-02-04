@@ -10,7 +10,6 @@ def get_html(url: str, **params) -> str:
 	: params	- параметры строки запроса.
 	'''
 	response = requests.get(url, params=params)
-	print(f'Response url={response.url}')
 	html = response.text
 
 	return html
