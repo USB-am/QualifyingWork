@@ -3,6 +3,10 @@ from typing import Union
 from fuzzywuzzy import fuzz, process
 
 
+def _mean(*values: int) -> int:
+	return int(sum(values) / len(values))
+
+
 def _get_text_percent(text: str, percent: Union[int, float]=100) -> str:
 	' Обрезает текст до определенного процента '
 
@@ -39,3 +43,11 @@ def text_in_text(text_1: str, text_2: str) -> bool:
 	'''
 
 	return text_1 in text_2
+
+
+def request_in_captions(text: str, captions: Union[list, tuple]) -> int:
+	correlation_percents = [Correlation.text_text(text, caption.text) \
+		for caption in captions]
+	text_inclusion = _mean(*correlation_percents)
+
+	return text_inclusion
