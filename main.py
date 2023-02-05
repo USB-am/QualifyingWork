@@ -15,12 +15,9 @@ web_resource_url = 'https://habr.com/ru/post/206264/'
 
 def main():
 	req = Request('Изобретаем jpeg')
-	print(req)
 	page = Page(web_resource_url)
-	print(page)
 	analyzer = Analyzer(page, req)
 	print(analyzer)
-	# print(get_top_page(req.text))
 
 
 if __name__ == '__main__':
