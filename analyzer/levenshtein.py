@@ -1,9 +1,20 @@
 from functools import lru_cache
 
 
-def 
+def match_percent(func):
+	def wrapper(word_1: str, word_2: str, acceptable_percent: int=75):
+		changes = func(word_1, word_2)
+		word_length = len(word_1)
+		percent = 100 - int(changes / word_length * 100)
+
+		if percent >= acceptable_percent:
+			return 100
+
+		return percent
+	return wrapper
 
 
+@match_percent
 def lev(word_1: str, word_2: str) -> int:
 	@lru_cache(None)
 	def min_dist(s1: str, s2: str) -> int:
