@@ -1,10 +1,9 @@
 from typing import Union
 
-from fuzzywuzzy import fuzz, process
-
 from parse import Page
 from parse.google_api import get_top_page
 from req import Request
+from .levenshtein import lev
 
 
 def _mean(*values: Union[int, float]) -> int:
@@ -25,21 +24,21 @@ def _get_text_percent(text: str, percent: Union[int, float]=100) -> str:
 
 class Correlation:
 	''' Функционал для сравнения строк '''
-	# https://habr.com/ru/post/491448/
 
 	@staticmethod
 	def text_text(text_1: str, text_2: str) -> int:
 		' Процент сравнения строк '
 
-		return fuzz.WRatio(text_1.lower(), text_2.lower())
+		return lev(text_1.lower(), text_2.lower())
 
 	@staticmethod
 	def text_list(text: str, words: list) -> int:
 		' Процент вхождения слова в список '
 
 		lower_words = tuple(map(lambda s: s.lower(), words))
+		output = [lev(text.lower(), word) for word in words]
 
-		return process.extractOne(text.lower(), lower_words)
+		return output
 
 
 def text_in_text(text_1: str, text_2: str) -> bool:

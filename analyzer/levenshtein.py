@@ -34,9 +34,3 @@ def lev(word_1: str, word_2: str) -> int:
 		)
 
 	return min_dist(0, 0)
-
-
-if __name__ == '__main__':
-	print(lev('привет', 'привет'))
-	print(lev('привет', 'превет'))
-	print(lev('привет', 'Превед'))

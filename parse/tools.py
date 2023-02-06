@@ -4,19 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class URL:
-	def __init__(self, url: str):
-		self.url = url
-
-		parse_url = urlparse(self.url)
-		self.netloc = parse_url.netloc
-		self.scheme = parse_url.scheme
-		self.domain = f'{self.scheme}://{self.netloc}'
-
-	def __str__(self):
-		return self.url
-
-
 def get_html(url: str, headers, **params) -> str:
 	'''
 	Получает html код страницы
