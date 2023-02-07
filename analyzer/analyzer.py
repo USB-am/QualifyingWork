@@ -40,9 +40,7 @@ class Analyzer:
 		self.page = page
 		self.request = request
 
-		page_analyze = get_page_analyze(self.page, self.request)
-		self.__dict__.update(page_analyze)
-		self.relevance = 80.4
+		self.attrs = get_page_analyze(self.page, self.request)
 
 	def __str__(self):
-		return f'<Analyzer "{self.page.url}" {self.relevance}%>'
+		return f'<Analyzer "{self.page.url}">'
