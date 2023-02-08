@@ -20,7 +20,9 @@ def main():
 	req = Request('Изобретаем jpeg')
 	page = Page(web_resource_url)
 	analyzer = Analyzer(page, req)
-	print(analyzer.attrs)
+	
+	for attribute, value in analyzer.attrs.items():
+		print(f'{attribute} = {value}')
 
 
 if __name__ == '__main__':
