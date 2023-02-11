@@ -1,4 +1,6 @@
 # hierarchy analysis method
+from typing import Union
+
 
 class Node:
 	def __init__(self, name: str, value: float, parent=None):
@@ -8,6 +10,34 @@ class Node:
 
 	def __str__(self):
 		return f'<Node {self.name}>'
+
+
+class Indicator:
+	def __init__(self, name: str, value: Union[int, float]):
+		self.name = name
+		self.value = value
+
+
+class Matrix:
+	def __init__(self):
+		self._indicators = []
+		self.titles = []
+
+	def add_indicator(self, indicator: Indicator) -> None:
+		'''
+		Добавляет новый показатель
+		~params:
+		: indicator: Indicator - экземпляр класса Indicator
+		'''
+		self._indicators.append(block)
+		self._update_titles()
+
+	def _update_titles(self) -> None:
+		self.titles = list({titles.add(indicator.name) \
+			for indicator in self._indicators})
+
+	def get_importance(self) -> list:
+		pass
 
 
 def main():
