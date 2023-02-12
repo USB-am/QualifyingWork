@@ -2,20 +2,42 @@
 from typing import Union
 
 
-class Node:
-	def __init__(self, name: str, value: float, parent=None):
-		self.name = name
-		self.value = value
-		self.parent = parent
-
-	def __str__(self):
-		return f'<Node {self.name}>'
-
-
 class Indicator(dict):
 	def __init__(self, name: str, **kwargs):
 		self.name = name
 		super().__init__(**kwargs)
+
+
+def build_matrix(ind_1: Indicator, ind_2: Indicator) -> list:
+	titles = tuple(ind_1.keys())
+	m = []
+
+	for row in range(len(titles)):
+		m.append([])
+		for col in range(len(titles)):
+			if col == row:
+				value = 1
+			elif col > row:
+				value = ind_1.get(titles[col], 0) / ind_2.get(titles[col], 0)
+			elif col < row:
+				value = ind_2.get(titles[col], 0) / ind_1.get(titles[col], 0)
+			m[-1].append(value)
+
+	return m
+
+
+def get_max_indicator(indicators: list) -> Indicator:
+	def get_max(ind_1: Indicator, ind_2: Indicator) -> Indicator:
+		matrix = []
+		for title in ind_1.keys():
+			pass
+
+	max_indicator = get_max(indicators[0], indicators[1])
+
+	for indicator in indicators[2:]:
+		max_indicator = get_max(max_indicator, indicator)
+
+	return max_indicator
 
 
 class Matrix:
@@ -56,8 +78,22 @@ class Matrix:
 
 
 def main():
-	i1 = Indicator(name='Indicator 1', title_h1=80, description_req=75)
-	i2 = Indicator(name='Indicator 2', title_h1=60, description_req=95)
+	args_1 = {
+		'price': 1000,
+		'volume': 500,
+		'marker': 1000,
+		'errors': 1,
+		'moving': 2000,
+	}
+	args_2 = {
+		'price': 1800,
+		'volume': 200,
+		'marker': 500,
+		'errors': 2,
+		'moving': 1000
+	}
+	i1 = Indicator(name='Indicator 1', **args_1)
+	i2 = Indicator(name='Indicator 2', **args_2)
 	i3 = Indicator(name='Indicator 3', title_h1=75, description_req=50)
 	i4 = Indicator(name='Indicator 4', title_h1=95, description_req=40)
 
@@ -67,7 +103,13 @@ def main():
 	M.add_indicator(i3)
 	M.add_indicator(i4)
 
-	for row in M.get_importance():
+	# for row in M.get_importance():
+	# 	for col in row:
+	# 		print(round(col, 2), end=' ')
+
+	# 	print()
+
+	for row in build_matrix(i1, i2):
 		for col in row:
 			print(round(col, 2), end=' ')
 
