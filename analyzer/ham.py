@@ -134,13 +134,6 @@ def hierarchy_analysis_method():
 	times_vectors = get_criterion_vectors(CRITERION_TIMES)
 	transportation_vectors = get_criterion_vectors(CRITERION_TRANSPORTATION)
 
-	# price_priority = sum([cv*v for cv, v in zip(criterion_vectors, price_vectors)])
-	# volume_priority = sum([cv*v for cv, v in zip(criterion_vectors, volume_vectors)])
-	# location_priority = sum([cv*v for cv, v in zip(criterion_vectors, location_vectors)])
-	# failure_priority = sum([cv*v for cv, v in zip(criterion_vectors, failure_vectors)])
-	# times_priority = sum([cv*v for cv, v in zip(criterion_vectors, times_vectors)])
-	# transportation_priority = sum([cv*v for cv, v in zip(criterion_vectors, transportation_vectors)])
-
 	# Матрица для расчета глобальных приоритетов
 	m = list(zip(*[
 		price_vectors,
