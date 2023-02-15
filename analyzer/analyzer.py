@@ -1,6 +1,7 @@
 from parse import Page
 from . import text as TextAnalyzer
 from . import html as HTMLAnalyzer
+from .ham import hierarchy_analysis_method
 from req import Request
 
 

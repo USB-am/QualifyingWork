@@ -11,7 +11,7 @@ _HEADERS = {
 }
 
 
-def get_top_page_url(keywords: str) -> str:
+def get_top_page_url(keywords: str) -> list:
 	'''
 	Возвращает url лучшего результата в Google поиске.
 	~params:
@@ -20,15 +20,22 @@ def get_top_page_url(keywords: str) -> str:
 
 	soup = get_soup(_BASE_URL, headers=_HEADERS, q=keywords)
 
-	first_block = soup.find('div', class_='yuRUbf')
-	a_tag = first_block.find('a')
-	href = a_tag.attrs.get('href', '')
+	first_blocks = soup.find_all('div', class_='yuRUbf')[:5]
+	hrefs = [first_block.find('a').attrs.get('href', '') \
+		for first_block in first_blocks]
 
-	return href
+	return hrefs
 
 
 def get_top_page(keywords: str) -> Page:
-	page_url = get_top_page_url(keywords)
+	page_url = get_top_page_url(keywords)[0]
 	page = Page(page_url)
 
 	return page
+
+
+def get_top_pages(keywords: str) -> list:
+	page_urls = get_top_page_url(keywords)
+	pages = [Page(page_url) for page_url in page_urls]
+
+	return pages
