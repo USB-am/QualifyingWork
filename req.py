@@ -1,4 +1,4 @@
-import strings
+import string
 
 
 def _get_keywords(text: str) -> tuple:

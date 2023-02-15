@@ -1,6 +1,20 @@
+from bs4 import BeautifulSoup
+
 from .tools import get_soup
 from . import text as TextParser
 from . import tags as TagParser
+
+
+def _get_tag(soup: BeautifulSoup, tag_name: str, text: bool=True) -> str:
+	tag = getattr(soup, tag_name)
+
+	if text:
+		if tag is not None:
+			return tag.string
+
+		return ''
+
+	return tag
 
 
 def get_page_information(url: str) -> dict:
@@ -12,11 +26,11 @@ def get_page_information(url: str) -> dict:
 	soup = get_soup(url)
 
 	output = {
-		'title': soup.title.string,
-		'h1': soup.h1.string,
-		'ul': soup.ul,
-		'ol': soup.ol,
-		'table': soup.table,
+		'title': _get_tag(soup, 'title'),
+		'h1': _get_tag(soup, 'h1'),
+		'ul': _get_tag(soup, 'ul', False),
+		'ol': _get_tag(soup, 'ol', False),
+		'table': _get_tag(soup, 'table', False),
 		'text': TextParser.get_full_text(soup),
 		'description': TextParser.get_meta_content(soup, 'description'),
 		'keywords': TextParser.get_keywords(soup),

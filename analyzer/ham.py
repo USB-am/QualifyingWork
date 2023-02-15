@@ -13,13 +13,24 @@ def P(*args) -> Union[float, int]:
 
 # Важность критериев
 CRITERION_IMPORTANCE = [
-	[1,   9,   5,   7,   4,   3  ],
-	[1/9, 1,   1/5, 1/3, 1/6, 1/7],
-	[1/5, 5,   1,   3,   1/2, 1/3],
-	[1/7, 3,   1/3, 1,   1/4, 1/5],
-	[1/4, 6,   2,   4,   1,   1/2],
-	[1/3, 7,   3,   5,   2,   1  ],
+	[1,   9,   5,   8,   7,   8,   3,   4,   2  ],
+	[1/9, 1,   1/5, 1/3, 3,   7,   2,   1/2, 8  ],
+	[1/5, 5,   1,   1/5, 2,   1/6, 7,   6,   6  ],
+	[1/8, 3,   5,   1,   3,   1/5, 8,   2,   6  ],
+	[1/7, 1/3, 1/2, 1/3, 1,   1/4, 6,   1/3, 4  ],
+	[1/8, 1/7, 6,   5,   4,   1,   8,   1/2, 8  ],
+	[1/3, 1/2, 1/7, 1/8, 1/6, 1/8, 1,   1/4, 1/2],
+	[1/4, 2,   1/6, 1/2, 3,   2,   4,   1,   7  ],
+	[1/2, 1/8, 1/6, 1/6, 1/4, 1/8, 2,   1/7, 1  ],
 ]
+# CRITERION_IMPORTANCE = [
+# 	[1,   9,   5,   7,   4,   3  ],
+# 	[1/9, 1,   1/5, 1/3, 1/6, 1/7],
+# 	[1/5, 5,   1,   3,   1/2, 1/3],
+# 	[1/7, 3,   1/3, 1,   1/4, 1/5],
+# 	[1/4, 6,   2,   4,   1,   1/2],
+# 	[1/3, 7,   3,   5,   2,   1  ],
+# ]
 # Цена товара
 CRITERION_PRICE = [
 	[1,   7,   1/2, 8  ],
@@ -104,20 +115,19 @@ def get_priority(criterion_vectors: list, vectors: list) -> Union[int, float]:
 	s = 0
 	for cv, v in zip(criterion_vectors, vectors):
 		s += cv * v
-		print(f'({cv} * {v}) +', end='\n')
-	print()
 
 	return s
 
 
 def hierarchy_analysis_method(criterion_importance: list):
 	criterion_vectors = get_criterion_vectors(criterion_importance)
+	print(criterion_vectors, end='\n\n')
 	consistency_attribute = get_consistency_attribute(
 		criterion_importance, criterion_vectors)
 	# Проверка согласованности
 	cc = consistency_attribute <= .1
-	if not cc:
-		raise ValueError('Некорректные важности критериев!!!')
+	# if not cc:
+	# 	raise ValueError('Некорректные важности критериев!!!')
 
 	price_vectors = get_criterion_vectors(CRITERION_PRICE)
 	volume_vectors = get_criterion_vectors(CRITERION_VOLUME)

@@ -22,8 +22,8 @@ def main():
 			print(f'{attribute} = {value}')
 		print('\n'*3)
 
-	excel = ExcelWriter(f'effectiveness_web_resources_{req.text}.xlsx')
-	excel.write(analyzers)
+	# excel = ExcelWriter(f'effectiveness_web_resources_{req.text}.xlsx')
+	# excel.write(analyzers)
 
 
 if __name__ == '__main__':
