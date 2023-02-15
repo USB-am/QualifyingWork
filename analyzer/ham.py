@@ -144,6 +144,8 @@ def hierarchy_analysis_method(criterion_importance: list):
 		for ind, col in enumerate(row):
 			value = col * criterion_vectors[ind]
 			temp += value
+			print(round(col, 2), end=' ')
+		print()
 
 		global_priorities.append(temp)
 
