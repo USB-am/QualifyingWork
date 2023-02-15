@@ -1,5 +1,15 @@
+import strings
+
+
 def _get_keywords(text: str) -> tuple:
-	without_punctuation = text	# DELETE PUNCTUATION SYMBOLS!!!
+	'''
+	Возвращает список слов из запроса, при этом удаляя знаки пунктуации
+	~params:
+	: text: str - текст запроса
+	'''
+	without_punctuation = text.translate(
+		str.maketrans('', '', string.punctuation)
+	)
 	keywords = without_punctuation.split()
 
 	return keywords
