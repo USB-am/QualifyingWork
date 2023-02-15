@@ -11,14 +11,6 @@ def P(*args) -> Union[float, int]:
 	return output
 
 
-# Информация
-DATA = [
-	[1000, 500,  1000, 1, 0, 2000],
-	[1800, 200,  500,  2, 1, 1000],
-	[800,  1000, 1500, 0, 2, 3000],
-	[2000, 500,  100,  0, 0, 500 ],
-]
-
 # Важность критериев
 CRITERION_IMPORTANCE = [
 	[1,   9,   5,   7,   4,   3  ],
@@ -118,10 +110,10 @@ def get_priority(criterion_vectors: list, vectors: list) -> Union[int, float]:
 	return s
 
 
-def hierarchy_analysis_method():
-	criterion_vectors = get_criterion_vectors(CRITERION_IMPORTANCE)
+def hierarchy_analysis_method(criterion_importance: list):
+	criterion_vectors = get_criterion_vectors(criterion_importance)
 	consistency_attribute = get_consistency_attribute(
-		CRITERION_IMPORTANCE, criterion_vectors)
+		criterion_importance, criterion_vectors)
 	# Проверка согласованности
 	cc = consistency_attribute <= .1
 	if not cc:
