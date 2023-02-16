@@ -23,51 +23,6 @@ CRITERION_IMPORTANCE = [
 	[1/4, 2,   1/6, 1/2, 3,   2,   4,   1,   7  ],
 	[1/2, 1/8, 1/6, 1/6, 1/4, 1/8, 2,   1/7, 1  ],
 ]
-# CRITERION_IMPORTANCE = [
-# 	[1,   9,   5,   7,   4,   3  ],
-# 	[1/9, 1,   1/5, 1/3, 1/6, 1/7],
-# 	[1/5, 5,   1,   3,   1/2, 1/3],
-# 	[1/7, 3,   1/3, 1,   1/4, 1/5],
-# 	[1/4, 6,   2,   4,   1,   1/2],
-# 	[1/3, 7,   3,   5,   2,   1  ],
-# ]
-# Цена товара
-CRITERION_PRICE = [
-	[1,   7,   1/2, 8  ],
-	[1/7, 1,   1/8, 2  ],
-	[2,   8,   1,   9  ],
-	[1/8, 1/2, 1/9, 1  ],
-]
-CRITERION_VOLUME = [
-	[1,   4,   1/6, 1  ],
-	[1/4, 1,   1/6, 1/4],
-	[6,   9,   1,   6  ],
-	[1,   4,   1/6, 1  ],
-]
-CRITERION_LOCATION = [
-	[1,   1/5, 3, 1/7],
-	[5,   1,   7, 1/3],
-	[1/3, 1/7, 1, 1/9],
-	[7,   3,   9, 1  ],
-]
-CRITERION_FAILURE = [
-	[1,   5,   1/5, 1/5],
-	[1/5, 1,   1/9, 1/9],
-	[5,   9,   1,   1  ],
-	[5,   9,   1,   1  ],
-]
-CRITERION_TIMES = [
-	[1,   5,   7,   1  ],
-	[1/5, 1,   3,   1/5],
-	[1/7, 1/3, 1,   1/7],
-	[1,   5,   7,   1  ],
-]
-CRITERION_TRANSPORTATION = [
-	[1,   1/5, 3, 1/7],
-	[5,   1,   7, 1/3],
-	[1/3, 1/7, 1, 1/9],
-	[7,   3,   9, 1  ],
-]
 
 # Случайная согласованность
 RANDOM_CONSISTENCY_PARAMS = [0, 0, .58, .9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49]
@@ -162,11 +117,9 @@ def hierarchy_analysis_method(data: list, criterion_importance: list):
 		for ind, col in enumerate(row):
 			value = col * criterion_vectors[ind]
 			temp += value
-			print(round(col, 2), end=' ')
-		print()
 
 		global_priorities.append(temp)
 
 	max_priority = max(global_priorities)
 
-	return global_priorities.index(max_priority), max_priority
+	return global_priorities.index(max_priority)
