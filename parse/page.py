@@ -8,13 +8,10 @@ from . import tags as TagParser
 def _get_tag(soup: BeautifulSoup, tag_name: str, text: bool=True) -> str:
 	tag = getattr(soup, tag_name)
 
-	if text:
-		if tag is not None:
-			return tag.string
+	if text and tag is not None:
+		return tag.string
 
-		return ''
-
-	return tag
+	return ''
 
 
 def get_page_information(url: str) -> dict:

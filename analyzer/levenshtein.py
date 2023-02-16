@@ -4,7 +4,7 @@ from functools import lru_cache
 def match_percent(func):
 	def wrapper(word_1: str, word_2: str, acceptable_percent: int=75):
 		changes = func(word_1, word_2)
-		word_length = len(word_1)
+		word_length = len(word_1) if len(word_1) > 0 else 1
 		percent = 100 - int(changes / word_length * 100)
 
 		if percent >= acceptable_percent:

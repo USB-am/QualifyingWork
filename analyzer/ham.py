@@ -119,32 +119,40 @@ def get_priority(criterion_vectors: list, vectors: list) -> Union[int, float]:
 	return s
 
 
-def hierarchy_analysis_method(criterion_importance: list):
+def get_prioritize(data: list, key: str) -> list:
+	prioritize = []
+
+	for d1 in data:
+		prioritize.append([])
+
+		for d2 in data:
+			try:
+				value = d1.attrs[key] / d2.attrs[key]
+			except ZeroDivisionError:
+				value = 1.0
+
+			prioritize[-1].append(value)
+
+	return prioritize
+
+
+def hierarchy_analysis_method(data: list, criterion_importance: list):
 	criterion_vectors = get_criterion_vectors(criterion_importance)
-	print(criterion_vectors, end='\n\n')
 	consistency_attribute = get_consistency_attribute(
 		criterion_importance, criterion_vectors)
 	# Проверка согласованности
 	cc = consistency_attribute <= .1
 	# if not cc:
-	# 	raise ValueError('Некорректные важности критериев!!!')
+	# 	raise ValueError('Некорректные весы критериев!!!')
 
-	price_vectors = get_criterion_vectors(CRITERION_PRICE)
-	volume_vectors = get_criterion_vectors(CRITERION_VOLUME)
-	location_vectors = get_criterion_vectors(CRITERION_LOCATION)
-	failure_vectors = get_criterion_vectors(CRITERION_FAILURE)
-	times_vectors = get_criterion_vectors(CRITERION_TIMES)
-	transportation_vectors = get_criterion_vectors(CRITERION_TRANSPORTATION)
+	criterions = []
+	for key in data[0].attrs.keys():
+		prioritize = get_prioritize(data, key)
+		vectors = get_criterion_vectors(prioritize)
+		criterions.append(vectors)
 
 	# Матрица для расчета глобальных приоритетов
-	m = list(zip(*[
-		price_vectors,
-		volume_vectors,
-		location_vectors,
-		failure_vectors,
-		times_vectors,
-		transportation_vectors
-	]))
+	m = list(zip(*criterions))
 
 	# Определение глобальных приоритетов
 	global_priorities = []
@@ -162,7 +170,3 @@ def hierarchy_analysis_method(criterion_importance: list):
 	max_priority = max(global_priorities)
 
 	return global_priorities.index(max_priority), max_priority
-
-
-if __name__ == '__main__':
-	print(hierarchy_analysis_method())

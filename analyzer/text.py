@@ -9,7 +9,12 @@ from .levenshtein import lev
 def _mean(*values: Union[int, float]) -> int:
 	' Возвращает среднее значение переданных аргументов '
 
-	return int(sum(values) / len(values))
+	try:
+		output = int(abs(sum(values)) / len(values))
+	except ZeroDivisionError:
+		output = 0
+
+	return output
 
 
 def _get_text_percent(text: str, percent: Union[int, float]=100) -> str:
@@ -29,6 +34,9 @@ class Correlation:
 	def text_text(text_1: str, text_2: str) -> int:
 		' Процент сравнения строк '
 
+		if None in (text_1, text_2):
+			return 0
+
 		return lev(text_1.lower(), text_2.lower())
 
 	@staticmethod
@@ -37,8 +45,9 @@ class Correlation:
 
 		lower_words = tuple(map(lambda s: s.lower(), words))
 		output = [lev(text.lower(), word) for word in words]
+		value = sum(output)
 
-		return output
+		return value if value >= 0 else 0
 
 
 def text_in_text(text_1: str, text_2: str) -> bool:
